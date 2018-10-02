@@ -1,5 +1,18 @@
 # task_sourcing
 
+## Using Semantic UI
+
+Include the following header in the HTML file:
+```html
+<head>
+  <link href="./semantic.min.css" rel="stylesheet" type="text/css">
+  <script src="./jquery.min.js"></script>
+  <script src="./semantic.min.js"></script>
+</head>
+```
+
+Dynamic Semantic-UI components like tab, sticky and all APIs need jQuery as a prerequisite. If you do not need JavaScript at all, you can remove the two script lines.
+
 ## Shcemas
 
 1. users (entity)
