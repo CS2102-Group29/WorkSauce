@@ -30,6 +30,32 @@
       $('.ui.form')
         .form({
           fields: {
+            name: {
+              identifier  : 'name',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your full name'
+                }
+              ]
+            },
+            mobile: {
+              identifier  : 'mobile',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your mobile number'
+                },
+                {
+                  type   : 'minLength[7]',
+                  prompt : 'Please enter a valid mobile number'
+                },
+                {
+                  type   : 'integer',
+                  prompt : 'Your mobile number must only contain numbers'
+                }
+              ]
+            },
             email: {
               identifier  : 'email',
               rules: [
@@ -74,10 +100,22 @@
       <form class="ui large form">
         <div class="ui stacked segment">
           <div class="field">
-          <div class="ui left icon input">
-            <i class="user icon"></i>
-            <input type="text" name="email" placeholder="E-mail address">
+            <div class="ui left icon input">
+              <i class="user icon"></i>
+                <input type="text" name="name" placeholder="Full name">
+            </div>
           </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="phone icon"></i>
+                <input type="text" name="mobile" placeholder="Mobile phone">
+              </div>
+            </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="envelope icon"></i>
+              <input type="text" name="email" placeholder="E-mail address">
+            </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
