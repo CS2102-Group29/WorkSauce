@@ -13,7 +13,7 @@ Include the following header in the HTML file:
 
 Dynamic Semantic-UI components like tab, sticky and all APIs need jQuery as a prerequisite. If you do not need JavaScript at all, you can remove the two script lines.
 
-## Shcemas
+## Schemas
 
 1. users (entity)
 ```sql
