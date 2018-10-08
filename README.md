@@ -37,7 +37,7 @@ CREATE TABLE tasks (
 	location VARCHAR(256) NOT NULL,
 	taskee_email VARCHAR(256) NOT NULL,
 	expiry_date DATE NOT NULL,
-	FOREIGN KEY (taskee_email) REFERENCES users (email)
+	FOREIGN KEY (taskee_email) REFERENCES users (email) ON UPDATE CASCADE
 	);
 ```
 
@@ -49,7 +49,7 @@ CREATE TABLE bid_task (
 	bid NUMERIC NOT NULL,
 	is_taken BOOLEAN NOT NULL,
 	FOREIGN KEY (task_id) REFERENCES tasks (id),
-	FOREIGN KEY (bidder_email) REFERENCES users (email),
+	FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE,
 	PRIMARY KEY (task_id, bidder_email)
 	);
 ```
