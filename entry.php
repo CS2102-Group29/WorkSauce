@@ -10,6 +10,10 @@
   <script src="./semantic.min.js"></script>
 </head>
 
+<?php
+  $session = !$_GET['session'] ? 'login' : $_GET['session']; 
+?>
+
 <style type="text/css">
   body {
     background-color: #DADADA;
@@ -25,6 +29,7 @@
   }
 </style>
 <script>
+
   $(document)
     .ready(function() {
       $('.ui.form')
@@ -82,6 +87,8 @@
                 }
               ]
             }
+          }, onSuccess: function(event, fields) {
+            alert('<?php echo ucfirst($session) ?> success!');
           }
         })
       ;
@@ -94,23 +101,35 @@
       <h2 class="ui teal image header">
         <img src="assets/images/logo.png" class="image">
           <div class="content">
-            Log-in to your account
+            <?php 
+              if($session == 'login') {
+                echo 'Log-in to your account';
+              } else if($session = 'signup') {
+                echo 'Create a new account';
+              }
+            ?>
           </div>
       </h2>
       <form class="ui large form">
         <div class="ui stacked segment">
-          <div class="field">
-            <div class="ui left icon input">
-              <i class="user icon"></i>
-                <input type="text" name="name" placeholder="Full name">
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui left icon input">
-              <i class="phone icon"></i>
-                <input type="text" name="mobile" placeholder="Mobile phone">
-              </div>
-            </div>
+          <?php
+            if($session == 'signup') {
+              echo '
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="user icon"></i>
+                      <input type="text" name="name" placeholder="Full name">
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="phone icon"></i>
+                      <input type="text" name="mobile" placeholder="Mobile phone">
+                  </div>
+                </div>
+              ';
+            }
+          ?>
           <div class="field">
             <div class="ui left icon input">
               <i class="envelope icon"></i>
@@ -123,16 +142,30 @@
               <input type="password" name="password" placeholder="Password">
             </div>
           </div>
-          <div class="ui fluid large teal submit button">Login</div>
+
+          <div class="ui fluid large teal submit button"><?php echo ucfirst($session) ?></div>
+
         </div>
               
         <div class="ui error message"></div>
               
       </form>
-              
-      <div class="ui message">
-        New to us? <a href="#">Sign Up</a>
-      </div>
+      
+      <?php
+        if($session == 'login') {
+          echo '
+            <div class="ui message">
+              New to us? <a href="entry.php?session=signup">Signup</a>
+            </div>
+          ';
+        } else if($session == 'signup') {
+          echo '
+            <div class="ui message">
+              Already have an account? <a href="entry.php?session=login">Login</a>
+            </div>
+          ';
+        }
+      ?>
     </div>
   </div>
 </body>
