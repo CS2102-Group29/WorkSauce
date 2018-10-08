@@ -10,6 +10,10 @@
   <script src="./semantic.min.js"></script>
 </head>
 
+<?php
+  $session = !$_GET['session'] ? 'Login' : $_GET['session']; 
+?>
+
 <style type="text/css">
   body {
     background-color: #DADADA;
@@ -99,18 +103,24 @@
       </h2>
       <form class="ui large form">
         <div class="ui stacked segment">
-          <div class="field">
-            <div class="ui left icon input">
-              <i class="user icon"></i>
-                <input type="text" name="name" placeholder="Full name">
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui left icon input">
-              <i class="phone icon"></i>
-                <input type="text" name="mobile" placeholder="Mobile phone">
-              </div>
-            </div>
+          <?php
+            if($session == 'Signup') {
+              echo '
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="user icon"></i>
+                      <input type="text" name="name" placeholder="Full name">
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui left icon input">
+                    <i class="phone icon"></i>
+                      <input type="text" name="mobile" placeholder="Mobile phone">
+                  </div>
+                </div>
+              ';
+            }
+          ?>
           <div class="field">
             <div class="ui left icon input">
               <i class="envelope icon"></i>
@@ -123,16 +133,30 @@
               <input type="password" name="password" placeholder="Password">
             </div>
           </div>
-          <div class="ui fluid large teal submit button">Login</div>
+
+          <div class="ui fluid large teal submit button"><?php echo $session ?></div>
+
         </div>
               
         <div class="ui error message"></div>
               
       </form>
-              
-      <div class="ui message">
-        New to us? <a href="#">Sign Up</a>
-      </div>
+      
+      <?php
+        if($session == 'Login') {
+          echo '
+            <div class="ui message">
+              New to us? <a href="entry.php?session=Signup">Signup</a>
+            </div>
+          ';
+        } else if($session == 'Signup') {
+          echo '
+            <div class="ui message">
+              Already have an account? <a href="entry.php?session=Login">Login</a>
+            </div>
+          ';
+        }
+      ?>
     </div>
   </div>
 </body>
