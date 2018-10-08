@@ -22,7 +22,7 @@ body {
 <div class="ui massive inverted menu">
   <div class="item">
     <div class="ui icon input">
-      <input type="text" placeholder="Search...">
+      <input type="text" placeholder="Search for tasks...">
         <i class="search link icon"></i>
     </div>
   </div>
@@ -30,18 +30,18 @@ body {
     <div class="ui simple dropdown item">
       Task Manager <i class="dropdown icon"></i>
       <div class="menu">
-        <a class="item">Upcoming Tasks</a>
-        <a class="item">Completed Tasks</a>
-        <a class="item">Current Bids</a>
+        <a class="item" href="stub.php" target="_self">Upcoming Tasks</a>
+        <a class="item" href="stub.php" target="_self">Completed Tasks</a>
+        <a class="item" href="stub.php" target="_self">Current Bids</a>
       </div>
     </div>
-    <a class="item">
+    <a class="item" href="stub.php" target="_self">
       View Profile
     </a>
-    <a class="active red item">
+    <a class="active red item" href="stub.php" target="_self">
       Create Task
     </a>
-    <a class="ui item">
+    <a class="ui item" href="entry.html" target="_self">
       Logout
     </a>
   </div>
