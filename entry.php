@@ -29,6 +29,7 @@
   }
 </style>
 <script>
+
   $(document)
     .ready(function() {
       $('.ui.form')
@@ -86,8 +87,8 @@
                 }
               ]
             }
-          }, onSuccess() {
-            alert('success');
+          }, onSuccess: function(event, fields) {
+            alert('<?php echo ucfirst($session) ?> success!');
           }
         })
       ;
