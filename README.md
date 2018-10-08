@@ -29,7 +29,7 @@ CREATE TABLE users (
 2. tasks (entity)
 ```sql
 CREATE TABLE tasks (
-	id SERIAL PRIMARY KEY,
+	id INTEGER PRIMARY KEY,
 	title VARCHAR(256) NOT NULL,
 	description TEXT,
 	date DATE NOT NULL,
