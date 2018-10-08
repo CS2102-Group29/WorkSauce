@@ -11,7 +11,7 @@
 </head>
 
 <?php
-  $session = !$_GET['session'] ? 'Login' : $_GET['session']; 
+  $session = !$_GET['session'] ? 'login' : $_GET['session']; 
 ?>
 
 <style type="text/css">
@@ -86,6 +86,8 @@
                 }
               ]
             }
+          }, onSuccess() {
+            alert('success');
           }
         })
       ;
@@ -98,13 +100,19 @@
       <h2 class="ui teal image header">
         <img src="assets/images/logo.png" class="image">
           <div class="content">
-            Log-in to your account
+            <?php 
+              if($session == 'login') {
+                echo 'Log-in to your account';
+              } else if($session = 'signup') {
+                echo 'Create a new account';
+              }
+            ?>
           </div>
       </h2>
       <form class="ui large form">
         <div class="ui stacked segment">
           <?php
-            if($session == 'Signup') {
+            if($session == 'signup') {
               echo '
                 <div class="field">
                   <div class="ui left icon input">
@@ -134,7 +142,7 @@
             </div>
           </div>
 
-          <div class="ui fluid large teal submit button"><?php echo $session ?></div>
+          <div class="ui fluid large teal submit button"><?php echo ucfirst($session) ?></div>
 
         </div>
               
@@ -143,16 +151,16 @@
       </form>
       
       <?php
-        if($session == 'Login') {
+        if($session == 'login') {
           echo '
             <div class="ui message">
-              New to us? <a href="entry.php?session=Signup">Signup</a>
+              New to us? <a href="entry.php?session=signup">Signup</a>
             </div>
           ';
-        } else if($session == 'Signup') {
+        } else if($session == 'signup') {
           echo '
             <div class="ui message">
-              Already have an account? <a href="entry.php?session=Login">Login</a>
+              Already have an account? <a href="entry.php?session=login">Login</a>
             </div>
           ';
         }
