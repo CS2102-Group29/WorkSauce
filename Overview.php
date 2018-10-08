@@ -61,31 +61,31 @@ body {
   <div class="ui massive list">
     <div class="item">
       <div class="content">
-        <a class="header">Stephane</a>
+        <a class="header" href="stub.php" target="_self">Stephane and others..</a>
         <div class="description">Needs help with <a><b>Wall Fixing</b></a>.</div>
       </div>
     </div>
     <div class="item">
       <div class="content">
-        <a class="header">Aaron</a>
+        <a class="header" href="stub.php" target="_self">Aaron and others..</a>
         <div class="description">Needs help with <a><b>Shifting Furniture</b></a>.</div>
       </div>
     </div>
     <div class="item">
       <div class="content">
-        <a class="header">Li Feng</a>
+        <a class="header" href="stub.php" target="_self">Li Feng and others..</a>
         <div class="description">Needs help with <a><b>Babysitting</b></a>.</div>
       </div>
     </div>
     <div class="item">
       <div class="content">
-        <a class="header">Sun Teck</a>
+        <a class="header" href="stub.php" target="_self">Sun Teck and others..</a>
         <div class="description">Needs help with <a><b>Painting The House</b></a>.</div>
       </div>
     </div>
     <div class="item">
       <div class="content">
-        <a class="header">Hsiang Hui</a>
+        <a class="header" href="stub.php" target="_self">Hsiang Hui and others..</a>
         <div class="description">Needs help with <a><b>Shifting Furniture</b></a>.</div>
       </div>
     </div>
