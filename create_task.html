@@ -4,7 +4,7 @@
         Create Task
     </div>
     <div class="content">
-        <form id="form_create_task" class="ui form">
+        <form action="http://localhost:4000/tasks/new" method="post" id="form_create_task" class="ui form">
             <div class="field">
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" required>
@@ -21,7 +21,7 @@
             </div>
             <div class="field">
                 <label for="loc">Location</label>
-                <input type="text" name="loc" id="loc" required>
+                <input type="text" name="location" id="loc" required>
             </div>
             <div class="field">
                 <label for="taskee_email">Taskee Email</label>
@@ -29,11 +29,11 @@
             </div>
             <div class="field">
                 <label for="exp_date">Expiry Date</label>
-                <input type="date" name="exp_date" id="exp_date">
+                <input type="date" name="expiry_date" id="exp_date">
         </div>
             <div class="field">
                 <label for="desc">Description</label>
-                <textarea name="desc" id="desc" rows="10"></textarea>
+                <textarea name="description" id="desc" rows="10"></textarea>
             </div>
         </form>
     </div>
