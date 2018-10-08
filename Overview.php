@@ -35,9 +35,9 @@ body {
         <a class="item" href="stub.php" target="_self">Current Bids</a>
       </div>
     </div>
-    <a class="item" href="stub.php" target="_self">
+    <div class="item" href="" target="_self" id="user">
       View Profile
-    </a>
+    </div>
     <a class="active red item" href="stub.php" target="_self">
       Create Task
     </a>
@@ -92,5 +92,49 @@ body {
   </div>
 </div>
 
+<div class="ui modal display">
+        <i class="close icon"></i>
+        <div class="ui huge header" style="text-align:center">
+          User Profile
+        </div>
+        <div class="ui segment">
+          <img class="ui centered small circular image" src="https://semantic-ui.com/images/avatar2/large/rachel.png">
+          <div class ="ui large header" style="text-align:center">
+            <p style="font-size: medium;" style="font-weight: bold;"> 
+            Username
+          </div>
+        </div>
+          <div class="description">
+             <div class="item">     
+              <i class="address card icon"></i> 
+              <div class="content">
+                <div class="header">Email Address:</div>
+              </div>
+            </div>
+
+             <div class="item">     
+            <i class="phone icon"></i>
+            <div class="content">
+              <div class="header">Mobile Phone Number:</div>
+            </div>
+          </div>
+
+           <div class="item">     
+            <i class="home icon"></i>
+            <div class="content">
+              <div class="header">Residential address:</div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+<script type="text/javascript">
+  $("#user").click(function(){
+    $(".display").modal('show');
+  });
+  $(".display").modal({
+    closable: true
+  });  
+</script>
 </body>
 </html>
