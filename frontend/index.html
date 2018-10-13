@@ -155,7 +155,7 @@
                 name: document.getElementById('profile_name').innerHTML.replace(/\<br\>/g, ""),
                 mobile: document.getElementById('profile_phone').innerHTML.replace(/\<br\>/g, "")
             };
-            console.log(fields);
+
             $.post(`${SERVER_URL}/users/updateinfo/${currentUserEmail}`, fields).done((res) => {
                 if(res.success) {
                     sessionStorage.setItem('current_user', fields.email);
