@@ -19,7 +19,7 @@
     <div class="ui inverted menu">
         <div class="item">
             <div class="ui icon input">
-                <input type="text" placeholder="Search for tasks...">
+                <input id="search_bar" type="text" onkeyup="filterTask()" placeholder="Search for tasks...">
                 <i class="search link icon"></i>
             </div>
         </div>
@@ -120,6 +120,25 @@
         </div>
     </div>
     <script>
+        // search bar filter
+        function filterTask() {
+            console.log("filter called");
+            var input = document.getElementById('search_bar');
+            var filter = input.value.toUpperCase();
+            var taskList = document.getElementById('list_task');
+            var tasks = taskList.getElementsByClassName('item');
+
+            // Loop through all tasks, and hide those who don't match the search query
+            for (i = 0; i < tasks.length; i++) {
+                var b = tasks[i].getElementsByTagName('b')[0];
+                if (b.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tasks[i].style.display = "";
+                } else {
+                    tasks[i].style.display = "none";
+                }
+            }
+        }
+        
         const $modalCreateTask = $('#modal_create_task');
         const $formCreateTask = $('#form_create_task');
 
