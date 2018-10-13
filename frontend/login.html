@@ -60,7 +60,6 @@
           }, onSuccess: function(event, fields) {
             event.preventDefault();
             $.post('http://localhost:4000/users/authenticate', fields).done((res) => {
-              console.log(res);
                 if(res.success) {
                   sessionStorage.setItem('current_user', fields.email);
                   location.href = 'index.html';

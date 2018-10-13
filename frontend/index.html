@@ -149,16 +149,31 @@
         }
 
         function saveProfileInfo() {
-            var ids = ['profile_name', 'profile_email', 'profile_phone'];
-            for(i = 0; i < ids.length; i++) {
-                document.getElementById(ids[i]).contentEditable = false;
-            }
+            const currentUserEmail = sessionStorage.getItem('current_user');
+            const fields = {
+                email: document.getElementById('profile_email').innerHTML,
+                name: document.getElementById('profile_name').innerHTML,
+                mobile: document.getElementById('profile_phone').innerHTML
+            };
 
-            document.getElementById('uploadImgBtn').disabled = false;
+            $.post(`${SERVER_URL}/users/updateinfo/${currentUserEmail}`, fields).done((res) => {
+                if(res.success) {
+                    sessionStorage.setItem('current_user', fields.email);
 
-            var editInfoBtn = document.getElementById('editInfoBtn');
-            editInfoBtn.innerHTML = 'Edit Personal Particulars';
-            editInfoBtn.onclick = makeProfileInfoEditable;
+                    var ids = ['profile_name', 'profile_email', 'profile_phone'];
+                    for(i = 0; i < ids.length; i++) {
+                        document.getElementById(ids[i]).contentEditable = false;
+                    }
+
+                    document.getElementById('uploadImgBtn').disabled = false;
+
+                    var editInfoBtn = document.getElementById('editInfoBtn');
+                    editInfoBtn.innerHTML = 'Edit Personal Particulars';
+                    editInfoBtn.onclick = makeProfileInfoEditable;
+                }
+
+                alert(res.msg);
+            })
         }
 
         // search bar filter
