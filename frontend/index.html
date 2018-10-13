@@ -149,20 +149,22 @@
         }
 
         function saveProfileInfo() {
-            const currentUserEmail = sessionStorage.getItem('current_user');
+            const currentUserEmail = sessionStorage.getItem('current_user').replace(/\<br\>/g, "");
             const fields = {
-                email: document.getElementById('profile_email').innerHTML,
-                name: document.getElementById('profile_name').innerHTML,
-                mobile: document.getElementById('profile_phone').innerHTML
+                email: document.getElementById('profile_email').innerHTML.replace(/\<br\>/g, ""),
+                name: document.getElementById('profile_name').innerHTML.replace(/\<br\>/g, ""),
+                mobile: document.getElementById('profile_phone').innerHTML.replace(/\<br\>/g, "")
             };
-
+            console.log(fields);
             $.post(`${SERVER_URL}/users/updateinfo/${currentUserEmail}`, fields).done((res) => {
                 if(res.success) {
                     sessionStorage.setItem('current_user', fields.email);
 
                     var ids = ['profile_name', 'profile_email', 'profile_phone'];
                     for(i = 0; i < ids.length; i++) {
-                        document.getElementById(ids[i]).contentEditable = false;
+                        const element = document.getElementById(ids[i]);
+                        element.innerHTML = element.innerHTML.replace(/\<br\>/g, "");
+                        element.contentEditable = false;
                     }
 
                     document.getElementById('uploadImgBtn').disabled = false;
