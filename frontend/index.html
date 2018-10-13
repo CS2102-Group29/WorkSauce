@@ -127,14 +127,40 @@
             </div>
             <div class="ui column centered grid">
                 <div id="profile_buttons" class="ui buttons">
-                    <button class="ui button">Upload Profile Image</button>
+                    <button id="uploadImgBtn" class="ui button">Upload Profile Image</button>
                     <div class="or"></div>
-                    <button class="ui positive button">Edit Personal Particulars</button>
+                    <button id="editInfoBtn" class="ui positive button" onclick="makeProfileInfoEditable()">Edit Personal Particulars</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
+        function makeProfileInfoEditable() {
+            var ids = ['profile_name', 'profile_email', 'profile_phone'];
+            for(i = 0; i < ids.length; i++) {
+                document.getElementById(ids[i]).contentEditable = true;
+            }
+
+            document.getElementById('uploadImgBtn').disabled = true;
+            
+            var editInfoBtn = document.getElementById('editInfoBtn');
+            editInfoBtn.innerHTML = 'Save Changes';
+            editInfoBtn.onclick = saveProfileInfo;
+        }
+
+        function saveProfileInfo() {
+            var ids = ['profile_name', 'profile_email', 'profile_phone'];
+            for(i = 0; i < ids.length; i++) {
+                document.getElementById(ids[i]).contentEditable = false;
+            }
+
+            document.getElementById('uploadImgBtn').disabled = false;
+
+            var editInfoBtn = document.getElementById('editInfoBtn');
+            editInfoBtn.innerHTML = 'Edit Personal Particulars';
+            editInfoBtn.onclick = makeProfileInfoEditable;
+        }
+
         // search bar filter
         function filterTask() {
             var input = document.getElementById('search_bar');
