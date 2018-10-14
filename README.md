@@ -36,7 +36,7 @@ CREATE TABLE tasks (
         time TIME NOT NULL,
 	location VARCHAR(256) NOT NULL,
 	taskee_email VARCHAR(256) NOT NULL,
-	expiry_date DATE NOT NULL,
+	expiry_date DATE NOT NULL CHECK(expiry_date <= date),
 	FOREIGN KEY (taskee_email) REFERENCES users (email) ON UPDATE CASCADE
 	);
 ```
