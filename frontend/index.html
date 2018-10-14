@@ -147,7 +147,35 @@
     <div id='modal_task_desc' class="ui tiny modal">
         <i class="close icon"></i>
         <div id="task_title" class="header"></div>
-        <div id="task_desc" class="content"></div>
+        <div class="content">
+            <div class="ui big list">
+                <div class="item">
+                    <i class="calendar icon"></i>
+                    <div id="task_date" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="clock icon"></i>
+                    <div id="task_time" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="building icon"></i>
+                    <div id="task_location" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="mail icon"></i>
+                    <div id="task_email" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="info circle icon"></i>
+                    <div class="content">Task description:</div>
+                </div>
+                <div class="content" id="task_desc"></div>
+                <div class="item">
+                    <i class="x icon"></i>
+                    <div id="task_expiry_date" class="content"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         function makeProfileInfoEditable() {
@@ -236,7 +264,12 @@
             $.get(`${SERVER_URL}/tasks/${taskId}`).done((res) => {
                 if(res.success) {
                     $('#task_title').text(res.data.title);
-                    $('#task_desc').text(res.data.description);
+                    $('#task_date').text(`Date: ${res.data.date.replace(/T(.*)/, "")}`);
+                    $('#task_time').text(`Time: ${res.data.time}`);
+                    $('#task_location').text(`Location: ${res.data.location}`);
+                    $('#task_email').text(`Contact: ${res.data.taskee_email}`);
+                    $('#task_desc').text(`---> ${res.data.description}`);
+                    $('#task_expiry_date').text(`Bidding closes on ${res.data.expiry_date.replace(/T(.*)/, "")}`);
                     $('#modal_task_desc').modal('show');
                 } else {
                     alert(res.err);
