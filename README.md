@@ -45,7 +45,7 @@ CREATE TABLE tasks (
 ```sql
 CREATE TABLE bid_task (
 	task_id INTEGER NOT NULL,
-	bidder_email VARCHAR(20) NOT NULL,
+	bidder_email VARCHAR(256) NOT NULL,
 	bid NUMERIC NOT NULL,
 	is_taken BOOLEAN NOT NULL,
 	FOREIGN KEY (task_id) REFERENCES tasks (id),
