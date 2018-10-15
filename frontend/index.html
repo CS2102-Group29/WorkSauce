@@ -292,6 +292,16 @@
                 </div>
             </div>
         </div>
+        <div class="actions">
+            <form id="form_bid">
+                <div class="ui action labeled input">
+                    <div class="ui label">$</div>
+                    <input type="number" min="0.01" step="0.01" name="bid" required>
+                    <button id="btn_bid_submit" type="submit" class="ui blue button">Bid</button>
+                </div>
+                <input id="task_id" type="hidden" name="task_id">
+            </form>
+        </div>
     </div>
     <script>
         $('#profile_update_form').hide();
@@ -357,6 +367,7 @@
         
         const $modalCreateTask = $('#modal_create_task');
         const $formCreateTask = $('#form_create_task');
+        const $formBid = $('#form_bid');
 
         function add_list_task(user, task) {
             $('#list_task').append(
@@ -387,6 +398,7 @@
                     $('#task_desc').text(`---> ${res.data.description}`);
                     $('#task_expiry_date').text(`Bidding closes on ${res.data.expiry_date.replace(/T(.*)/, "")}`);
                     $('#modal_task_desc').modal('show');
+                    $('#task_id').val(taskId);
                 } else {
                     alert(res.err);
                 }
@@ -420,7 +432,7 @@
                     location.reload();
                 } else {
                     $formCreateTask.addClass("error");
-                    $('#form_err_msg').text(r.err.detail);
+                    $('#form_err_msg').text("Please ensure expiry date is not after task date.");
                 }
             });
         });
@@ -445,6 +457,20 @@
             });
         }
 
+        $('#a_profile').click(() => {
+            $('#modal_profile').modal('show');
+        });
+
+        $formBid.on('submit', (e) => {
+            e.preventDefault();
+
+            const data = {bidder_email: current_user};
+            $formBid.serializeArray().forEach((val) => {
+                data[val.name] = val.value;
+            });
+
+            $.post(SERVER_URL + '/bids/new', data);
+        });
     </script>
 </body>
 </html>
