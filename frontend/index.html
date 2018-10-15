@@ -32,7 +32,89 @@
     #task_desc_btn:hover {
         color: #4286f4;
     }
+
+    #cancel_update_btn {
+        margin-top: 10px;
+    }
 </style>
+
+<script>
+    $(document)
+      .ready(function() {
+        $('#profile_update_form')
+          .form({
+            fields: {
+              name: {
+                  identifier  : 'name',
+                  rules: [
+                    {
+                      type   : 'empty',
+                      prompt : 'Please enter your full name'
+                    }
+                  ]
+              },
+              mobile: {
+                identifier  : 'mobile',
+                rules: [
+                  {
+                    type   : 'empty',
+                    prompt : 'Please enter your mobile number'
+                  },
+                  {
+                    type   : 'minLength[7]',
+                    prompt : 'Please enter a valid mobile number'
+                  },
+                  {
+                    type   : 'integer',
+                    prompt : 'Your mobile number must only contain numbers'
+                  }
+                ]
+              },
+              email: {
+                identifier  : 'email',
+                rules: [
+                  {
+                    type   : 'empty',
+                    prompt : 'Please enter your e-mail'
+                  },
+                  {
+                    type   : 'email',
+                    prompt : 'Please enter a valid e-mail'
+                  }
+                ]
+              },
+              password: {
+                identifier  : 'password',
+                rules: [
+                  {
+                    type   : 'empty',
+                    prompt : 'Please enter your password'
+                  },
+                  {
+                    type   : 'length[6]',
+                    prompt : 'Your password must be at least 6 characters'
+                  }
+                ]
+              }
+            }, onSuccess: function(event, fields) {
+              event.preventDefault();
+              $.post(`${SERVER_URL}/users/updateinfo/${current_user}`, fields).done((res) => {
+                if(res.success) {
+                    showProfileHideForm();
+                    sessionStorage.setItem('current_user', fields.email);
+                    current_user = fields.email;
+                    updateProfileInfo();
+                    // alert(res.msg + 'yaitu');
+                } else {
+                    alert(res.msg);
+                }
+              });
+            }
+          })
+        ;
+      })
+    ;
+</script>
 
 <body>
     <div class="ui inverted menu">
@@ -126,7 +208,7 @@
         <div class="content">
             <img id="profile_img" src="" class="ui centered small circular image">
             <h2 id="profile_name" class="ui center aligned header"></h2>
-            <div class="ui big list">
+            <div id="profile_info" class="ui big list">
                 <div class="item">
                     <i class="mail icon"></i>
                     <div id="profile_email" class="content"></div>
@@ -136,11 +218,44 @@
                     <div id="profile_phone" class="content"></div>
                 </div>
             </div>
-            <div class="ui column centered grid">
-                <div id="profile_buttons" class="ui buttons">
+
+            <form id="profile_update_form" class="ui form">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="name" placeholder="Full name">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="phone icon"></i>
+                        <input type="text" name="mobile" placeholder="Mobile phone">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="envelope icon"></i>
+                        <input type="text" name="email" placeholder="E-mail address">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+
+                <button id="save_update_btn" class="ui positive teal submit button fluid"">Save</button>
+
+            </form>
+
+            <button id="cancel_update_btn" class="ui teal button fluid">Cancel</button>
+
+            <div id="profile_buttons" class="ui column centered grid">
+                <div class="ui buttons">
                     <button id="uploadImgBtn" class="ui button">Upload Profile Image</button>
                     <div class="or"></div>
-                    <button id="editInfoBtn" class="ui positive button" onclick="makeProfileInfoEditable()">Edit Personal Particulars</button>
+                    <button id="editInfoBtn" class="ui positive button">Edit Personal Particulars</button>
                 </div>
             </div>
         </div>
@@ -179,48 +294,48 @@
         </div>
     </div>
     <script>
-        function makeProfileInfoEditable() {
-            var ids = ['profile_name', 'profile_email', 'profile_phone'];
-            for(i = 0; i < ids.length; i++) {
-                document.getElementById(ids[i]).contentEditable = true;
-            }
+        $('#profile_update_form').hide();
+        $('#cancel_update_btn').hide();
 
-            document.getElementById('uploadImgBtn').disabled = true;
-            
-            var editInfoBtn = document.getElementById('editInfoBtn');
-            editInfoBtn.innerHTML = 'Save Changes';
-            editInfoBtn.onclick = saveProfileInfo;
+        updateProfileInfo();
+        
+        $('#cancel_update_btn').click(() => {
+            showProfileHideForm();
+        });
+
+        function showProfileHideForm() {
+            $('#profile_update_form').show();
+            $('#profile_info').show();
+            $('#profile_buttons').show();
+            $('#profile_update_form').hide();
+            $('#profile_name').show();
+            $('#cancel_update_btn').hide();
+            $('#modal_profile>.header').text('User Profile');
+        }
+        
+        function showFormHideInfo() {
+            $('#profile_update_form').hide();
+            $('#profile_info').hide();
+            $('#profile_buttons').hide();
+            $('#profile_update_form').show();
+            $('#profile_name').hide();
+            $('#cancel_update_btn').show();
+            $('#modal_profile>.header').text('Edit Profile');
         }
 
-        function saveProfileInfo() {
-            const currentUserEmail = sessionStorage.getItem('current_user').replace(/\<br\>/g, "");
-            const fields = {
-                email: document.getElementById('profile_email').innerHTML.replace(/\<br\>/g, ""),
-                name: document.getElementById('profile_name').innerHTML.replace(/\<br\>/g, ""),
-                mobile: document.getElementById('profile_phone').innerHTML.replace(/\<br\>/g, "")
-            };
-
-            $.post(`${SERVER_URL}/users/updateinfo/${currentUserEmail}`, fields).done((res) => {
+        $('#editInfoBtn').click(() => {
+            $.get(`${SERVER_URL}/users/${current_user}`).done((res) => {
                 if(res.success) {
-                    sessionStorage.setItem('current_user', fields.email);
-
-                    var ids = ['profile_name', 'profile_email', 'profile_phone'];
-                    for(i = 0; i < ids.length; i++) {
-                        const element = document.getElementById(ids[i]);
-                        element.innerHTML = element.innerHTML.replace(/\<br\>/g, "");
-                        element.contentEditable = false;
-                    }
-
-                    document.getElementById('uploadImgBtn').disabled = false;
-
-                    var editInfoBtn = document.getElementById('editInfoBtn');
-                    editInfoBtn.innerHTML = 'Edit Personal Particulars';
-                    editInfoBtn.onclick = makeProfileInfoEditable;
+                    $('#profile_update_form input[name="name"]').val(res.data.name);
+                    $('#profile_update_form input[name="email"]').val(res.data.email);
+                    $('#profile_update_form input[name="mobile"]').val(res.data.mobile);
+                    $('#profile_update_form input[name="password"]').val(res.data.password);
+                    showFormHideInfo()
+                } else {
+                    alert(res.msg);
                 }
-
-                alert(res.msg);
-            })
-        }
+            });
+        });
 
         // search bar filter
         function filterTask() {
@@ -314,18 +429,22 @@
             sessionStorage.clear();
             location.reload();
         });
+        
+        function updateProfileInfo() {
+            $.get(SERVER_URL + '/users/' + current_user).done((r) => {
+                const user = r.data;
+                console.log(r);
+                $('#profile_img').attr('src', user.image_url);
+                $('#profile_name').text(user.name);
+                $('#profile_email').text(user.email);
+                $('#profile_phone').text(user.mobile);
+            });
 
-        $.get(SERVER_URL + '/users/' + current_user).done((r) => {
-            const user = r.data[0];
-            $('#profile_img').attr('src', user.image_url);
-            $('#profile_name').text(user.name);
-            $('#profile_email').text(user.email);
-            $('#profile_phone').text(user.mobile);
-        });
+            $('#a_profile').click(() => {
+                $('#modal_profile').modal('show');
+            });
+        }
 
-        $('#a_profile').click(() => {
-            $('#modal_profile').modal('show');
-        });
     </script>
 </body>
 </html>
