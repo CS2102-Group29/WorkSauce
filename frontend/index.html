@@ -399,6 +399,13 @@
                     $('#task_expiry_date').text(`Bidding closes on ${res.data.expiry_date.replace(/T(.*)/, "")}`);
                     $('#modal_task_desc').modal('show');
                     $('#task_id').val(taskId);
+
+                    if(res.data.taskee_email === current_user) {
+                        $('#form_bid').hide();
+                    } else {
+                        $('#form_bid').show();
+                    }
+
                 } else {
                     alert(res.err);
                 }
@@ -409,7 +416,7 @@
         $.get(SERVER_URL + '/tasks').done((r) => {
             for (const task of r.data) {
                 $.get(SERVER_URL + '/users/' + task.taskee_email).done((r) => {
-                    const user = r.data[0];
+                    const user = r.data;
                     if(moment().isAfter(moment(task.expiry_date))) return;
                     add_list_task(user, task);
                 });
@@ -471,6 +478,7 @@
 
             $.post(SERVER_URL + '/bids/new', data);
         });
+        
     </script>
 </body>
 </html>
