@@ -347,10 +347,7 @@
                 data[val.name] = val.value;
             });
 
-            console.log(data);
-
             $.post(SERVER_URL + '/bids/new', data).done((r) => {
-                console.log(r);
             });
         });
     </script>
