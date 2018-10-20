@@ -57,5 +57,5 @@ CREATE TABLE bid_task (
 ## Uploading CSV to psql (using terminal)
 
 ```psql
-\copy tasble_name FROM 'path/to/csv/file' DELIMITER ',' CSV
+\copy table_name FROM 'path/to/csv/file' DELIMITER ',' CSV
 ```
