@@ -53,3 +53,9 @@ CREATE TABLE bid_task (
 	PRIMARY KEY (task_id, bidder_email)
 	);
 ```
+
+## Uploading CSV to psql (using terminal)
+
+```psql
+\copy tasble_name FROM 'path/to/csv/file' DELIMITER ',' CSV
+```
