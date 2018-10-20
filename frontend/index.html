@@ -33,6 +33,16 @@
         color: #4286f4;
     }
 
+    #user_details_btn {
+        border: none;
+        outline: none;
+        background-color: none;
+    }
+
+    #user_details_btn:hover {
+        color: #4286f4;
+    }
+
     #cancel_update_btn {
         margin-top: 10px;
     }
@@ -356,7 +366,7 @@
 
             // Loop through all tasks, and hide those who don't match the search query
             for (i = 0; i < tasks.length; i++) {
-                var b = tasks[i].getElementsByTagName('b')[0];
+                var b = tasks[i].getElementsByTagName('b')[1];
                 if (b.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tasks[i].style.display = "";
                 } else {
@@ -374,8 +384,8 @@
                 $('<div class="item">').append(
                     $('<img class="ui avatar image">').attr('src', user.image_url)
                 ).append(
-                    $('<div class="content">').append(
-                        $('<a class="header">').text(user.name)
+                    $('<div class="content">').html(
+                        '<button data-email=' + user.email + ' id="user_details_btn" onclick="displayUserDetails(this)"><b>' + user.name + '</b></button>'
                     ).append(
                         $('<div class="description">').html(
                             'Need help with <button data-id=' + task.id + ' id="task_desc_btn" onclick="displayTaskDesc(this)"><b>' + task.title + '</b></button>'
@@ -409,8 +419,24 @@
                 } else {
                     alert(res.err);
                 }
-            })
-            
+            });
+        }
+
+        function displayUserDetails(button) {
+            const userEmail = button.dataset.email;
+
+            $.get(`${SERVER_URL}/users/${userEmail}`).done((res) => {
+                if(res.success) {
+                    const user = res.data;
+                    // show modal profile without enabling edit
+                    $('#modal_profile').modal('show');
+                    $('#profile_buttons').hide();
+                    $('#profile_img').attr('src', user.image_url);
+                    $('#profile_name').text(user.name);
+                    $('#profile_email').text(user.email);
+                    $('#profile_phone').text(user.mobile);
+                }
+            });
         }
 
         $.get(SERVER_URL + '/tasks').done((r) => {
@@ -452,7 +478,6 @@
         function updateProfileInfo() {
             $.get(SERVER_URL + '/users/' + current_user).done((r) => {
                 const user = r.data;
-                console.log(r);
                 $('#profile_img').attr('src', user.image_url);
                 $('#profile_name').text(user.name);
                 $('#profile_email').text(user.email);
@@ -461,6 +486,8 @@
 
             $('#a_profile').click(() => {
                 $('#modal_profile').modal('show');
+                $('#profile_buttons').show();
+
             });
         }
 

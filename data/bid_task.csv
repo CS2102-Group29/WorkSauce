@@ -1,4 +1,3 @@
-task_id,bidder_email,bid,is_taken
 15,test3@example.com,41,FALSE
 25,test18@example.com,23,FALSE
 89,test20@example.com,48,TRUE
@@ -35,7 +34,7 @@ task_id,bidder_email,bid,is_taken
 98,test7@example.com,11,TRUE
 49,test8@example.com,19,FALSE
 83,test14@example.com,24,FALSE
-10,test1@example.com,10,TRUE
+10,test2@example.com,10,TRUE
 19,test1@example.com,25,FALSE
 71,test20@example.com,10,TRUE
 23,test9@example.com,17,TRUE
