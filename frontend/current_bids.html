@@ -20,6 +20,11 @@
         <div class="left menu">
             <a href="./index.html" class="active blue item">Home</a>
         </div>
+        <div class="item" style="visibility:hidden">
+            <div class="ui icon input">
+                <input type="text">
+            </div>
+        </div>
         <div class="right menu">
             <div class="ui simple dropdown item">
                 Task Manager <i class="dropdown icon"></i>
@@ -314,5 +319,19 @@
     $(() => {
         $('#task_list').accordion();
     });
+    updateInfo();
+
+    function updateInfo() {
+        ['success', 'ongoing', 'fail'].forEach((status) => {
+            $.get(`${SERVER_URL}/bids/${current_user}/${status}`).done((res) => {
+                if(res.success) {
+                    alert(status +"adasdasd");
+                } else {
+                    console.log(res.msg);
+                }
+            });
+        });
+    }
+
 </script>
 </html>
