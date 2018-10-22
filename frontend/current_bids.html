@@ -15,6 +15,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="ui inverted menu">
         <div class="left menu">
@@ -31,7 +32,7 @@
                 <div class="menu">
                     <a href="#" class="item">Tasks Created</a>
                     <a href="#" class="item">Tasks Assigned</a>
-                    <a href="#" class="item">Current Bids</a>
+                    <a href="#" class="item">Bidding Manager</a>
                 </div>
             </div>
             <a id="a_profile" class="item">View Profile</a>
@@ -136,46 +137,6 @@
                     <div id="profile_phone" class="content"></div>
                 </div>
             </div>
-
-            <form id="profile_update_form" class="ui form">
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="user icon"></i>
-                        <input type="text" name="name" placeholder="Full name">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="phone icon"></i>
-                        <input type="text" name="mobile" placeholder="Mobile phone">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="envelope icon"></i>
-                        <input type="text" name="email" placeholder="E-mail address">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="lock icon"></i>
-                        <input type="password" name="password" placeholder="Password">
-                    </div>
-                </div>
-
-                <button id="save_update_btn" class="ui positive teal submit button fluid">Save</button>
-
-            </form>
-
-            <button id="cancel_update_btn" class="ui teal button fluid">Cancel</button>
-
-            <div id="profile_buttons" class="ui column centered grid">
-                <div class="ui buttons">
-                    <button id="uploadImgBtn" class="ui button">Upload Profile Image</button>
-                    <div class="or"></div>
-                    <button id="editInfoBtn" class="ui positive button">Edit Personal Particulars</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -211,16 +172,6 @@
                 </div>
             </div>
         </div>
-        <div class="actions">
-            <form id="form_bid">
-                <div class="ui action labeled input">
-                    <div class="ui label">$</div>
-                    <input type="number" min="0.01" step="0.01" name="bid" required>
-                    <button id="btn_bid_submit" type="submit" class="ui blue button">Bid</button>
-                </div>
-                <input id="task_id" type="hidden" name="task_id">
-            </form>
-        </div>
     </div>
 </body>
 
@@ -254,9 +205,41 @@
                     res.data.forEach((data) => {
                         $(`#${status}_bids`).append(
                             $('<tr>').append(
-                                $('<td>').text(data.task)
+                                $('<td>').append(
+                                    $('<a>').text(data.task).click(() => {
+                                        const taskId = data.id;
+
+                                        $.get(`${SERVER_URL}/tasks/${taskId}`).done((res) => {
+                                            if(res.success) {
+                                                $('#task_title').text(res.data.title);
+                                                $('#task_date').text(`Date: ${res.data.date.replace(/T(.*)/, "")}`);
+                                                $('#task_time').text(`Time: ${res.data.time}`);
+                                                $('#task_location').text(`Location: ${res.data.location}`);
+                                                $('#task_email').text(`Contact: ${res.data.taskee_email}`);
+                                                $('#task_desc').text(`---> ${res.data.description}`);
+                                                $('#task_expiry_date').text(`Bidding closes on ${res.data.expiry_date.replace(/T(.*)/, "")}`);
+                                                $('#modal_task_desc').modal('show');
+                                            }
+                                        });
+                                    })
+                                )
                             ).append(
-                                $('<td>').text(data.taskee_name) 
+                                $('<td>').append(
+                                    $('<a>').text(data.taskee_name).click(() => {
+                                        const userEmail = data.email;
+
+                                        $.get(`${SERVER_URL}/users/${userEmail}`).done((res) => {
+                                            if(res.success) {
+                                                const user = res.data;
+                                                $('#modal_profile').modal('show');
+                                                $('#profile_img').attr('src', user.image_url);
+                                                $('#profile_name').text(user.name);
+                                                $('#profile_email').text(user.email);
+                                                $('#profile_phone').text(user.mobile);
+                                            }
+                                        });
+                                    })
+                                )
                             ).append(
                                $('<td>').text(data.your_bid) 
                             ).append(
