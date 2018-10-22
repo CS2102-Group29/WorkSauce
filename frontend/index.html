@@ -149,7 +149,7 @@
                 <div class="menu">
                     <a href="#" class="item">Tasks Created</a>
                     <a href="#" class="item">Tasks Assigned</a>
-                    <a href="#" class="item">Current Bids</a>
+                    <a href="./current_bids.html" class="item">Bidding Manager</a>
                 </div>
             </div>
             <a id="a_profile" class="item">View Profile</a>
@@ -316,7 +316,7 @@
             <form id="form_bid">
                 <div class="ui action labeled input">
                     <div class="ui label">$</div>
-                    <input type="number" min="0.01" step="0.01" name="bid" required>
+                    <input type="number" min="0.01" step="0.01" name="bid" id="bid_input" required>
                     <button id="btn_bid_submit" type="submit" class="ui blue button">Bid</button>
                 </div>
                 <input id="task_id" type="hidden" name="task_id">
@@ -430,9 +430,20 @@
                     } else {
                         $('#form_bid').show();
                     }
-
                 } else {
                     alert(res.err);
+                }
+            });
+
+            $.get(`${SERVER_URL}/bids/${taskId}/${current_user}`).done((res) => {
+                if(res.success) {
+                    if(!res.data) {
+                        $('#bid_input').val('');
+                    } else {
+                       $('#bid_input').val(res.data.bid); 
+                    }
+                } else {
+                    console.log(res);
                 }
             });
         }
@@ -514,7 +525,9 @@
                 data[val.name] = val.value;
             });
 
-            $.post(SERVER_URL + '/bids/new', data);
+            $.post(SERVER_URL + '/bids/new', data).done((res) => {
+                alert(res.msg);
+            });
         });
         
     </script>
