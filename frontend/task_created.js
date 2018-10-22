@@ -46,8 +46,12 @@ function populateTask(place, task) {
                                     .addClass('button')
                                     .html('<i class="check icon"></i> Accept')
                                     .click(() => {
-                                        const selected = $('input[name=bidder_' + task.id + ']:checked', '#form_' + task.id).val();
-                                        console.log(selected);
+                                        const bidder_email = $('input[name=bidder_' + task.id + ']:checked', '#form_' + task.id).val();
+
+                                        $.get(SERVER_URL + `/bids/accept/${task.id}/${bidder_email}`).done((data) => {
+                                            $('#button_' + task.id).prop('disabled', true);
+                                            $('input[name=bidder_' + task.id + ']').prop('disabled', true);
+                                        });
                                     })
                                 )
                             )
