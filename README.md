@@ -43,11 +43,13 @@ CREATE TABLE tasks (
 
 3. bid_task (relationship)
 ```sql
+CREATE TYPE bid_status AS ENUM ('success', 'ongoing', 'fail');
+
 CREATE TABLE bid_task (
 	task_id INTEGER NOT NULL,
 	bidder_email VARCHAR(256) NOT NULL,
 	bid NUMERIC NOT NULL,
-	is_taken BOOLEAN NOT NULL,
+	status bid_status NOT NULL,
 	FOREIGN KEY (task_id) REFERENCES tasks (id),
 	FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE,
 	PRIMARY KEY (task_id, bidder_email)
