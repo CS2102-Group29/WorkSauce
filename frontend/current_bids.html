@@ -184,7 +184,7 @@
 
     function updateInfo() {
         ['success', 'ongoing', 'fail'].forEach((status) => {
-            $.get(`${SERVER_URL}/bids/${current_user}/${status}`).done((res) => {
+            $.get(`${SERVER_URL}/bids/${current_user}/status/${status}`).done((res) => {
                 if(res.success) {
                     if(res.data.length !== 0) {
                         $(`#${status}_bids_table`).append(
@@ -241,7 +241,23 @@
                                     })
                                 )
                             ).append(
-                               $('<td>').text(data.your_bid) 
+                               $('<td>').append(
+                                   $('<div class="ui action labeled input">').append(
+                                       $('<div class="ui label">').text('$')
+                                   ).append(
+                                       $('<input type="number" min="0.01" step="0.01" name="bid" required>').attr('id', 'bid_input_' + data.id).val(data.your_bid)
+                                   ).append(
+                                       $('<button id="btn_bid_submit" type="submit" class="ui blue button">').text('Bid').click(() => {
+                                            $.post(SERVER_URL + '/bids/new', { task_id: data.id, bidder_email: current_user, bid: $('#bid_input_' + data.id).val() }).done((res) => {
+                                                ['success', 'ongoing', 'fail'].forEach((status) => {
+                                                    $(`#${status}_bids_table`).empty();
+                                                });
+                                                updateInfo();
+                                                alert(res.msg);
+                                            });
+                                       })
+                                   )
+                               )
                             ).append(
                                 $('<td>').text(data.lowest_bid)
                             )
