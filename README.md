@@ -22,7 +22,7 @@ CREATE TABLE users (
 	password VARCHAR(256) NOT NULL,
 	name VARCHAR(256) NOT NULL,
 	mobile VARCHAR(256) NOT NULL,
-	image_url VARCHAR(512)
+	image BYTEA
 	);
 ```
 
