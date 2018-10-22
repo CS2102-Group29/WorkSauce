@@ -81,6 +81,8 @@ function populateBid(task, bids) {
                         $('<div class="ui fitted toggle checkbox">').append(
                             $('<input type="radio">')
                             .attr('name', 'bidder_' + task.id)
+                            .prop('checked', bid.status === 'success')
+                            .prop('disabled', bid.status !== 'ongoing')
                             .val(bid.bidder_email)
                             .click(() => {
                                 $('#button_' + task.id).prop('disabled', false)
