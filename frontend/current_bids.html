@@ -55,108 +55,17 @@
                 <i class="dropdown icon"></i>
                 Successful Bids
             </div>
-            <div class="content">
-                <table class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Taskee</th>
-                            <th>Your Bid</th>
-                            <th>Lowest Bid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                            <td>12.00</td>
-                        </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                            <td>12.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div class="content" id="success_bids_table"></div>
             <div class="title">
                 <i class="dropdown icon"></i>
                 Ongoing Bids
             </div>
-            <div class="content">
-                <table class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Taskee</th>
-                            <th>Your Bid</th>
-                            <th>Lowest Bid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="collapsing">
-                                <div class="ui fitted toggle checkbox">
-                                    <input id="" type="radio" name="bidder"> <label for=""></label>
-                                </div>
-                            </td>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                        </tr>
-                        <tr>
-                            <td class="collapsing">
-                                <div class="ui fitted toggle checkbox">
-                                    <input id="" type="radio" name="bidder"> <label for=""></label>
-                                </div>
-                            </td>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div class="content" id="ongoing_bids_table"></div>
             <div class="title">
                 <i class="dropdown icon"></i>
                 Unsuccessful Bids
             </div>
-            <div class="content">
-                <table class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Taskee</th>
-                            <th>Your Bid</th>
-                            <th>Lowest Bid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="collapsing">
-                                <div class="ui fitted toggle checkbox">
-                                    <input id="" type="radio" name="bidder"> <label for=""></label>
-                                </div>
-                            </td>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                        </tr>
-                        <tr>
-                            <td class="collapsing">
-                                <div class="ui fitted toggle checkbox">
-                                    <input id="" type="radio" name="bidder"> <label for=""></label>
-                                </div>
-                            </td>
-                            <td>Name</td>
-                            <td>test1@example.com</td>
-                            <td>12.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div class="content" id="fail_bids_table"></div>
         </div>
     </div>
 
@@ -319,18 +228,47 @@
     $(() => {
         $('#task_list').accordion();
     });
+
     updateInfo();
 
     function updateInfo() {
         ['success', 'ongoing', 'fail'].forEach((status) => {
             $.get(`${SERVER_URL}/bids/${current_user}/${status}`).done((res) => {
                 if(res.success) {
-                    alert(status +"adasdasd");
-                } else {
-                    console.log(res.msg);
+                    if(res.data.length !== 0) {
+                        $(`#${status}_bids_table`).append(
+                            $('<table class="ui celled table">').append(
+                                $('<thead>').html(
+                                    `<th>Task</th>
+                                    <th>Taskee</th>
+                                    <th>Your Bid</th>
+                                    <th>Lowest Bid</th>`
+                                )
+                            ).append(
+                                $(`<tbody id="${status}_bids">`)
+                            )
+                        )
+
+                    }
+
+                    res.data.forEach((data) => {
+                        $(`#${status}_bids`).append(
+                            $('<tr>').append(
+                                $('<td>').text(data.task)
+                            ).append(
+                                $('<td>').text(data.taskee_name) 
+                            ).append(
+                               $('<td>').text(data.your_bid) 
+                            ).append(
+                                $('<td>').text(data.lowest_bid)
+                            )
+                        )    
+                    });
                 }
             });
         });
+        
+        
     }
 
 </script>
