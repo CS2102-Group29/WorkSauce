@@ -273,7 +273,7 @@
             <div id="profile_buttons" class="ui column centered grid">
                 <div class="ui buttons">
                     <label for="embedpollfileinput" id="uploadImgBtn" class="ui button">Upload Profile Image</label>
-                    <input type="file" class="inputfile" id="embedpollfileinput" accept=".png, .jpeg, .jpg"/>
+                    <input onchange="fileEvent()" type="file" class="inputfile" id="embedpollfileinput" accept=".png, .jpeg, .jpg"/>
                     <div class="or"></div>
                     <button id="editInfoBtn" class="ui positive button">Edit Personal Particulars</button>
                 </div>
@@ -366,6 +366,11 @@
                 }
             });
         });
+
+        function fileEvent() {
+            const imgFile = document.getElementById('embedpollfileinput').files[0];
+            alert(imgFile);
+        }
 
         // search bar filter
         function filterTask() {
