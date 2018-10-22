@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Task Sourcing</title>
+    <link rel="stylesheet" href="assets/semantic.min.css">
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script>
+        const SERVER_URL = 'http://localhost:4000';
+
+        var current_user = sessionStorage.getItem('current_user');
+        if (current_user === null) {
+            location.href ='login.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="ui inverted menu">
+        <div class="item">
+            <div class="ui icon input">
+                <input id="search_bar" type="text" onkeyup="filterTask()" placeholder="Search for tasks...">
+                <i class="search link icon"></i>
+            </div>
+        </div>
+        <div class="right menu">
+            <div class="ui simple dropdown item">
+                Task Manager <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="#" class="item">Tasks Created</a>
+                    <a href="#" class="item">Tasks Assigned</a>
+                    <a href="#" class="item">Current Bids</a>
+                </div>
+            </div>
+            <a id="a_profile" class="item">View Profile</a>
+            <a id="a_create_task" class="active red item">Create Task</a>
+            <a id="a_logout" class="ui item">Logout</a>
+        </div>
+    </div>
+    <div class="ui main text container">
+        <div class="ui vertical segment">
+            <h2 class="ui center aligned icon header">
+                <i class="search icon"></i>
+                Look Someone You Need
+                <div class="sub header">
+                    Pick a helper and make your life better.
+                </div>
+            </h2>
+        </div>
+        <div id="task_list" class="ui styled fluid accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Task 1
+            </div>
+            <div class="content">
+                <table class="ui compact celled definition table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>E-mail address</th>
+                            <th>Bid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="collapsing">
+                                <div class="ui fitted toggle checkbox">
+                                    <input id="" type="radio" name="bidder"> <label for=""></label>
+                                </div>
+                            </td>
+                            <td>Name</td>
+                            <td>test1@example.com</td>
+                            <td>12.00</td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                <div class="ui fitted toggle checkbox">
+                                    <input id="" type="radio" name="bidder"> <label for=""></label>
+                                </div>
+                            </td>
+                            <td>Name</td>
+                            <td>test1@example.com</td>
+                            <td>12.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Task 2
+            </div>
+            <div class="content">
+                <table class="ui compact celled definition table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>E-mail address</th>
+                            <th>Bid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="collapsing">
+                                <div class="ui fitted toggle checkbox">
+                                    <input id="" type="radio" name="bidder"> <label for=""></label>
+                                </div>
+                            </td>
+                            <td>Name</td>
+                            <td>test1@example.com</td>
+                            <td>12.00</td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                <div class="ui fitted toggle checkbox">
+                                    <input id="" type="radio" name="bidder"> <label for=""></label>
+                                </div>
+                            </td>
+                            <td>Name</td>
+                            <td>test1@example.com</td>
+                            <td>12.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="modal_create_task" class="ui small modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Create Task
+        </div>
+        <div class="content">
+            <form id="form_create_task" class="ui form">
+                <div class="required field">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" required>
+                </div>
+                <div class="two fields">
+                    <div class="required field">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" id="date" required>
+                    </div>
+                    <div class="required field">
+                        <label for="time">Time</label>
+                        <input type="time" name="time" id="time" required>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label for="loc">Location</label>
+                    <input type="text" name="location" id="loc" required>
+                </div>
+                <div class="required field">
+                    <label for="exp_date">Expiry Date</label>
+                    <input type="date" name="expiry_date" id="exp_date">
+                </div>
+                <div class="field">
+                    <label for="desc">Description</label>
+                    <textarea name="description" id="desc" rows="10"></textarea>
+                </div>
+                <div class="ui error message">
+                    <div class="header">Error</div>
+                    <p id="form_err_msg"></p>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui cancel button">
+                Cancel
+            </div>
+            <input type="reset" value="Reset" form="form_create_task" class="ui red button">
+            <input type="submit" value="Submit" form="form_create_task" class="ui blue button">
+        </div>
+    </div>
+    <div id="modal_profile" class="ui tiny modal">
+        <i class="close icon"></i>
+        <div class="header">
+            User Profile
+        </div>
+        <div class="content">
+            <img id="profile_img" src="" class="ui centered small circular image">
+            <h2 id="profile_name" class="ui center aligned header"></h2>
+            <div id="profile_info" class="ui big list">
+                <div class="item">
+                    <i class="mail icon"></i>
+                    <div id="profile_email" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="phone icon"></i>
+                    <div id="profile_phone" class="content"></div>
+                </div>
+            </div>
+
+            <form id="profile_update_form" class="ui form">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="name" placeholder="Full name">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="phone icon"></i>
+                        <input type="text" name="mobile" placeholder="Mobile phone">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="envelope icon"></i>
+                        <input type="text" name="email" placeholder="E-mail address">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                </div>
+
+                <button id="save_update_btn" class="ui positive teal submit button fluid">Save</button>
+
+            </form>
+
+            <button id="cancel_update_btn" class="ui teal button fluid">Cancel</button>
+
+            <div id="profile_buttons" class="ui column centered grid">
+                <div class="ui buttons">
+                    <button id="uploadImgBtn" class="ui button">Upload Profile Image</button>
+                    <div class="or"></div>
+                    <button id="editInfoBtn" class="ui positive button">Edit Personal Particulars</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='modal_task_desc' class="ui tiny modal">
+        <i class="close icon"></i>
+        <div id="task_title" class="header"></div>
+        <div class="content">
+            <div class="ui big list">
+                <div class="item">
+                    <i class="calendar icon"></i>
+                    <div id="task_date" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="clock icon"></i>
+                    <div id="task_time" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="building icon"></i>
+                    <div id="task_location" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="mail icon"></i>
+                    <div id="task_email" class="content"></div>
+                </div>
+                <div class="item">
+                    <i class="info circle icon"></i>
+                    <div class="content">Task description:</div>
+                </div>
+                <div class="content" id="task_desc"></div>
+                <div class="item">
+                    <i class="x icon"></i>
+                    <div id="task_expiry_date" class="content"></div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <form id="form_bid">
+                <div class="ui action labeled input">
+                    <div class="ui label">$</div>
+                    <input type="number" min="0.01" step="0.01" name="bid" required>
+                    <button id="btn_bid_submit" type="submit" class="ui blue button">Bid</button>
+                </div>
+                <input id="task_id" type="hidden" name="task_id">
+            </form>
+        </div>
+    </div>
+    <script src="task_created.js"></script>
+</body>
+</html>
