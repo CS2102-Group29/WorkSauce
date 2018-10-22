@@ -9,20 +9,50 @@ function populateTask(place, task) {
         );
         place.append(
             $('<div class="content">').append(
-                $('<table class="ui compact celled definition table">').append(
-                    $('<thead>').append(
-                        $('<tr>').append(
-                            $('<th>')
-                        ).append(
-                            $('<th>').text('Name')
-                        ).append(
-                            $('<th>').text('E-mail address')
-                        ).append(
-                            $('<th>').text('Bid')
+                $('<form>')
+                .attr('id', 'form_' + task.id)
+                .on('submit', e => e.preventDefault())
+                .append(
+                    $('<table class="ui compact celled definition table">').append(
+                        $('<thead>').append(
+                            $('<tr>').append(
+                                $('<th>')
+                            ).append(
+                                $('<th>').text('Name')
+                            ).append(
+                                $('<th>').text('E-mail address')
+                            ).append(
+                                $('<th>').text('Bid')
+                            )
+                        )
+                    ).append(
+                        populateBid(task, bids)
+                    ).append(
+                        $('<tfoot class="full-width">').append(
+                            $('<tr>').append(
+                                $('<th>')
+                            ).append(
+                                $('<th colspan="4">').append(
+                                    $('<button>')
+                                    .prop('disabled', true)
+                                    .attr('id', 'button_' + task.id)
+                                    .addClass('ui')
+                                    .addClass('right')
+                                    .addClass('floated')
+                                    .addClass('small')
+                                    .addClass('green')
+                                    .addClass('labeled')
+                                    .addClass('icon')
+                                    .addClass('button')
+                                    .html('<i class="check icon"></i> Accept')
+                                    .click(() => {
+                                        const selected = $('input[name=bidder_' + task.id + ']:checked', '#form_' + task.id).val();
+                                        console.log(selected);
+                                    })
+                                )
+                            )
                         )
                     )
-                ).append(
-                    populateBid(task, bids)
                 )
             )
         );
@@ -49,7 +79,12 @@ function populateBid(task, bids) {
                 $('<tr>').append(
                     $('<td class="collapsing">').append(
                         $('<div class="ui fitted toggle checkbox">').append(
-                            $('<input type="radio">').attr('name', 'bidder')
+                            $('<input type="radio">')
+                            .attr('name', 'bidder_' + task.id)
+                            .val(bid.bidder_email)
+                            .click(() => {
+                                $('#button_' + task.id).prop('disabled', false)
+                            })
                         ).append(
                             $('<label>')
                         )
