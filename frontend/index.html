@@ -493,16 +493,12 @@
                 $('#profile_email').text(user.email);
                 $('#profile_phone').text(user.mobile);
             });
-
-            $('#a_profile').click(() => {
-                $('#modal_profile').modal('show');
-                $('#profile_buttons').show();
-
-            });
         }
 
         $('#a_profile').click(() => {
+            updateProfileInfo();
             $('#modal_profile').modal('show');
+            $('#profile_buttons').show();
         });
 
         $formBid.on('submit', (e) => {
