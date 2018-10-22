@@ -138,7 +138,7 @@
             <div class="ui simple dropdown item">
                 Task Manager <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="#" class="item">Tasks Created</a>
+                    <a href="task_created.html" class="item">Tasks Created</a>
                     <a href="#" class="item">Tasks Assigned</a>
                     <a href="#" class="item">Current Bids</a>
                 </div>
@@ -318,7 +318,7 @@
         $('#cancel_update_btn').hide();
 
         updateProfileInfo();
-        
+
         $('#cancel_update_btn').click(() => {
             showProfileHideForm();
         });
@@ -332,7 +332,7 @@
             $('#cancel_update_btn').hide();
             $('#modal_profile>.header').text('User Profile');
         }
-        
+
         function showFormHideInfo() {
             $('#profile_update_form').hide();
             $('#profile_info').hide();
@@ -374,7 +374,7 @@
                 }
             }
         }
-        
+
         const $modalCreateTask = $('#modal_create_task');
         const $formCreateTask = $('#form_create_task');
         const $formBid = $('#form_bid');
@@ -394,7 +394,7 @@
                 )
             );
         }
-        
+
         function displayTaskDesc(button) {
             const taskId = button.dataset.id;
 
@@ -474,7 +474,7 @@
             sessionStorage.clear();
             location.reload();
         });
-        
+
         function updateProfileInfo() {
             $.get(SERVER_URL + '/users/' + current_user).done((r) => {
                 const user = r.data;
@@ -505,7 +505,7 @@
 
             $.post(SERVER_URL + '/bids/new', data);
         });
-        
+
     </script>
 </body>
 </html>
