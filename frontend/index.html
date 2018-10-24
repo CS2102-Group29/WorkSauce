@@ -328,7 +328,7 @@
         $('#cancel_update_btn').hide();
 
         updateProfileInfo();
-        
+
         $('#cancel_update_btn').click(() => {
             showProfileHideForm();
         });
@@ -342,7 +342,7 @@
             $('#cancel_update_btn').hide();
             $('#modal_profile>.header').text('User Profile');
         }
-        
+
         function showFormHideInfo() {
             $('#profile_update_form').hide();
             $('#profile_info').hide();
@@ -389,7 +389,7 @@
                 }
             }
         }
-        
+
         const $modalCreateTask = $('#modal_create_task');
         const $formCreateTask = $('#form_create_task');
         const $formBid = $('#form_bid');
@@ -409,7 +409,7 @@
                 )
             );
         }
-        
+
         function displayTaskDesc(button) {
             const taskId = button.dataset.id;
 
@@ -440,7 +440,7 @@
                     if(!res.data) {
                         $('#bid_input').val('');
                     } else {
-                       $('#bid_input').val(res.data.bid); 
+                       $('#bid_input').val(res.data.bid);
                     }
                 } else {
                     console.log(res);
@@ -500,7 +500,7 @@
             sessionStorage.clear();
             location.reload();
         });
-        
+
         function updateProfileInfo() {
             $.get(SERVER_URL + '/users/' + current_user).done((r) => {
                 const user = r.data;
@@ -529,7 +529,7 @@
                 alert(res.msg);
             });
         });
-        
+
     </script>
 </body>
 </html>
