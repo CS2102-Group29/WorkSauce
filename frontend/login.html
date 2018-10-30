@@ -8,6 +8,7 @@
   <link href="assets/semantic.min.css" rel="stylesheet" type="text/css">
   <script src="assets/jquery.min.js"></script>
   <script src="assets/semantic.min.js"></script>
+  <script src="init.js"></script>
 </head>
 
 <style type="text/css">
@@ -59,7 +60,7 @@
             }
           }, onSuccess: function(event, fields) {
             event.preventDefault();
-            $.post('http://localhost:4000/users/authenticate', fields).done((res) => {
+            $.post(SERVER_URL + '/users/authenticate', fields).done((res) => {
                 if(res.success) {
                   sessionStorage.setItem('current_user', fields.email);
                   location.href = 'index.html';

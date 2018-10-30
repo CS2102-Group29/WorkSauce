@@ -8,6 +8,7 @@
   <link href="assets/semantic.min.css" rel="stylesheet" type="text/css">
   <script src="assets/jquery.min.js"></script>
   <script src="assets/semantic.min.js"></script>
+  <script src="init.js"></script>
 </head>
 
 <style type="text/css">
@@ -85,7 +86,7 @@
             }
           }, onSuccess: function(event, fields) {
             event.preventDefault();
-            $.post('http://localhost:4000/users/new', fields).done((res) => {
+            $.post(SERVER_URL + '/users/new', fields).done((res) => {
               if(res.success) {
                 alert(`User ${res.data.name} is successfully created.`);
                 location.href = 'index.html';
