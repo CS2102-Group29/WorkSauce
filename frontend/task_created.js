@@ -1,7 +1,5 @@
 function populateTask(place, task) {
-    $.get(SERVER_URL + '/bids').done((data) => {
-        const bids = data.data.filter(e => e.task_id === task.id);
-
+    $.get(SERVER_URL + '/bids?task_id=' + task.id).done((data) => {
         place.append(
             $('<div class="title">').html(
                 '<i class="dropdown icon"></i>' + task.title
@@ -26,7 +24,7 @@ function populateTask(place, task) {
                             )
                         )
                     ).append(
-                        populateBid(task, bids)
+                        populateBid(task, data.data)
                     ).append(
                         $('<tfoot class="full-width">').append(
                             $('<tr>').append(
