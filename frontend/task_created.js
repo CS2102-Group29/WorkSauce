@@ -74,9 +74,11 @@ function populateBid(task, bids) {
         );
     } else {
         for (bid of bids) {
-            $.get(SERVER_URL + '/users').done((data) => {
-                // TODO
+            const tdUser = $('<td>');
+            $.get(SERVER_URL + '/users/' + bid.bidder_email).done((data) => {
+                tdUser.text(data.data.name);
             });
+
             tbody.append(
                 $('<tr>').append(
                     $('<td class="collapsing">').append(
@@ -94,7 +96,7 @@ function populateBid(task, bids) {
                         )
                     )
                 ).append(
-                    $('<td>').text(bid.bidder_email)
+                    tdUser
                 ).append(
                     $('<td>').text(bid.bidder_email)
                 ).append(
