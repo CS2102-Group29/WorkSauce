@@ -110,11 +110,9 @@ function populateBid(task, bids) {
 $(() => {
     const $taskList = $('#task_list');
 
-    $.get(SERVER_URL + '/tasks').done((data) => {
+    $.get(SERVER_URL + '/tasks?email=' + current_user).done((data) => {
         for (task of data.data) {
-            if (task.taskee_email === current_user) {
-                populateTask($taskList, task);
-            }
+            populateTask($taskList, task);
         }
     });
 
