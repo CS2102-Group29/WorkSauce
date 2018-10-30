@@ -1,0 +1,18 @@
+version: "3"
+services:
+  api:
+    build: backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+  db:
+    build: data
+    ports:
+      - "5432"
+  web:
+    image: nginx
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "8080:80"
