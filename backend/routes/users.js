@@ -45,7 +45,6 @@ router.post('/new', (req, res) => {
     dbClient.query(`INSERT INTO users VALUES (
                         '${email}', '${password}', '${name}',
                         '${mobile}', NULL);`, (err, dbres) => {
-                            console.log(err);
                             if(err && err.code === UNIQUE_VIOLATION) {
                                 res.json({ success: false, msg: "User with the specified email already exists." })
                             } else {
@@ -98,8 +97,6 @@ router.post('/updateimg/:email', (req, res) => {
 router.post('/authenticate', (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email);
-    console.log(password);
     res.header({ 'Access-Control-Allow-Origin': '*' });
 
     dbClient.query(`SELECT COUNT(*) FROM users 
