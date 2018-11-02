@@ -235,7 +235,7 @@
                                     })
                                 )
                             ).append(
-                               $('<td>').append(
+                               $('<td>').append( status == 'ongoing' ?
                                    $('<div class="ui action labeled input">').append(
                                        $('<div class="ui label">').text('$')
                                    ).append(
@@ -250,7 +250,7 @@
                                                 alert(res.msg);
                                             });
                                        })
-                                   )
+                                   ) : $(`<p>${data.your_bid}</p>`)
                                )
                             ).append(
                                 $('<td>').text(data.lowest_bid)
