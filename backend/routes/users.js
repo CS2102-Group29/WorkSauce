@@ -83,7 +83,7 @@ router.post('/updateimg/:email', (req, res) => {
 
     res.header({ 'Access-Control-Allow-Origin': '*' });
 
-    dbClient.query(`UPDATE users SET image = BYTEA('${image}')
+    dbClient.query(`UPDATE users SET image = TEXT('${image}')
                     WHERE email = '${email}';`, (err, dbres) => {
                         if(err) {
                             res.json({ success: false, msg: err });
