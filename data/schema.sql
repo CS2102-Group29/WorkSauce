@@ -30,6 +30,22 @@ CREATE TABLE bid_task (
     FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE
 );
 
+CREATE FUNCTION change_everything_to_fail()
+RETURNS TRIGGER AS $$
+BEGIN
+UPDATE bid_task SET status = 'fail'
+WHERE bidder_email <> NEW.bidder_email AND task_id = NEW.task_id;
+RETURN NEW;
+END; $$
+LANGUAGE PLPGSQL;
+
+CREATE TRIGGER success_integrity
+AFTER INSERT OR UPDATE
+ON bid_task
+FOR EACH ROW
+WHEN (NEW.status = 'success')
+EXECUTE PROCEDURE change_everything_to_fail();
+
 \copy users from '/docker-entrypoint-initdb.d/users.csv' csv
 \copy tasks from '/docker-entrypoint-initdb.d/tasks.csv' csv
 \copy bid_task from '/docker-entrypoint-initdb.d/bid_task.csv' csv
