@@ -40,14 +40,26 @@
         margin-top: 10px;
     }
 
-    .inputfile {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
+        .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        display: block;
     }
+
+    .file-upload {
+        display: none;
+    }
+
+    .circle {
+        border-radius: 1000px !important;
+        overflow: hidden;
+        width: 128px;
+        height: 128px;
+        border: 8px solid rgba(255, 255, 255, 0.7);
+        top: 72px;
+        margin: auto;
+    }
+
 </style>
 
 <script>
@@ -214,12 +226,20 @@
     </div>
     <div id="modal_profile" class="ui tiny modal">
         <i class="close icon"></i>
+        
         <div class="header">
             User Profile
         </div>
+
+        <div class="circle">
+               <img class="profile-pic" id="profile_img" src="" style="height: 100%;">
+               <input class="file-upload" id ="uploadImg" type="file" accept="image/*" onchange="previewFile()"/>
+        </div>
+
+        <h2 id="profile_name" class="ui center aligned header"></h2>
+
         <div class="content">
-            <img id="profile_img" src="" class="ui centered small circular image">
-            <h2 id="profile_name" class="ui center aligned header"></h2>
+            
             <div id="profile_info" class="ui big list">
                 <div class="item">
                     <i class="mail icon"></i>
@@ -265,8 +285,7 @@
 
             <div id="profile_buttons" class="ui column centered grid">
                 <div class="ui buttons">
-                    <label for="embedpollfileinput" id="uploadImgBtn" class="ui button">Upload Profile Image</label>
-                    <input onchange="fileEvent()" type="file" class="inputfile" id="embedpollfileinput" accept=".png, .jpeg, .jpg"/>
+                    <button id="uploadImgBtn" class="ui button">Upload Profile Image</button>
                     <div class="or"></div>
                     <button id="editInfoBtn" class="ui positive button">Edit Personal Particulars</button>
                 </div>
@@ -326,6 +345,33 @@
             showProfileHideForm();
         });
 
+        $('#uploadImgBtn').click(() => {
+            $('#uploadImg').click()
+        })
+
+        function previewFile() {
+          var file    = document.querySelector('input[type=file]').files[0];
+          var reader  = new FileReader();
+          var preview = document.querySelector('img');
+          reader.addEventListener("load", function () {
+            //reader.result is the image
+            //now need to call the node js route 
+            preview.src = reader.result;
+            var imageObj = {image: reader.result};
+             $.post(`${SERVER_URL}/users/updateimg/${current_user}`, imageObj).done((res) => {
+                        if(res.success) {
+                            console.log(reader.result)
+                        } else {
+                            alert(res.msg);
+                        }
+                      });
+            }, false);
+
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+        }
+
         function showProfileHideForm() {
             $('#profile_update_form').show();
             $('#profile_info').show();
@@ -360,11 +406,6 @@
             });
         });
 
-        function fileEvent() {
-            const imgFile = document.getElementById('embedpollfileinput').files[0];
-            alert(imgFile);
-        }
-
         // search bar filter
         function filterTask() {
             var input = document.getElementById('search_bar');
@@ -390,7 +431,7 @@
         function add_list_task(user, task) {
             $('#list_task').append(
                 $('<div class="item">').append(
-                    $('<img class="ui avatar image">').attr('src', user.image_url)
+                    $('<img class="ui avatar image">').attr('src', user.image)
                 ).append(
                     $('<div class="content">').html(
                         '<button data-email=' + user.email + ' id="user_details_btn" onclick="displayUserDetails(this)"><b>' + user.name + '</b></button>'
@@ -447,10 +488,11 @@
             $.get(`${SERVER_URL}/users/${userEmail}`).done((res) => {
                 if(res.success) {
                     const user = res.data;
+                    console.log(user);
                     // show modal profile without enabling edit
                     $('#modal_profile').modal('show');
                     $('#profile_buttons').hide();
-                    $('#profile_img').attr('src', user.image_url);
+                    $('#profile_img').attr(src, user.image);
                     $('#profile_name').text(user.name);
                     $('#profile_email').text(user.email);
                     $('#profile_phone').text(user.mobile);
@@ -497,7 +539,8 @@
         function updateProfileInfo() {
             $.get(SERVER_URL + '/users/' + current_user).done((r) => {
                 const user = r.data;
-                $('#profile_img').attr('src', user.image_url);
+
+                $('#profile_img').attr('src', user.image);
                 $('#profile_name').text(user.name);
                 $('#profile_email').text(user.email);
                 $('#profile_phone').text(user.mobile);
