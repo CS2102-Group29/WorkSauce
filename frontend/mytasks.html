@@ -215,7 +215,7 @@
         function populateDetails(task, bid) {
             const tbody = $('<tbody>')
             for (tasks of task) {
-                const task_date = moment(tasks.date).formt('ll');
+                const task_date = moment(tasks.date).format('ll');
 
                 if(moment().isAfter(task_date)) continue;
 
