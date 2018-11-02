@@ -347,7 +347,7 @@
 
         $('#uploadImgBtn').click(() => {
             $('#uploadImg').click()
-        })
+        });
 
         function previewFile() {
           var file    = document.querySelector('input[type=file]').files[0];
@@ -360,9 +360,10 @@
             var imageObj = {image: reader.result};
              $.post(`${SERVER_URL}/users/updateimg/${current_user}`, imageObj).done((res) => {
                         if(res.success) {
-                            console.log(reader.result)
+                            updateProfileInfo();
+                            displayTasks();
                         } else {
-                            alert(res.msg);
+                            console.log(res.msg);
                         }
                       });
             }, false);
@@ -488,11 +489,11 @@
             $.get(`${SERVER_URL}/users/${userEmail}`).done((res) => {
                 if(res.success) {
                     const user = res.data;
-                    console.log(user);
+
                     // show modal profile without enabling edit
                     $('#modal_profile').modal('show');
                     $('#profile_buttons').hide();
-                    $('#profile_img').attr(src, user.image);
+                    $('#profile_img').attr('src', user.image);
                     $('#profile_name').text(user.name);
                     $('#profile_email').text(user.email);
                     $('#profile_phone').text(user.mobile);
@@ -500,15 +501,20 @@
             });
         }
 
-        $.get(SERVER_URL + '/tasks').done((r) => {
-            for (const task of r.data) {
-                $.get(SERVER_URL + '/users/' + task.taskee_email).done((r) => {
-                    const user = r.data;
-                    if(moment().isAfter(moment(task.expiry_date))) return;
-                    add_list_task(user, task);
-                });
-            }
-        });
+        displayTasks();
+
+        function displayTasks() {
+            $('#list_task').empty();
+            $.get(SERVER_URL + '/tasks').done((r) => {
+                for (const task of r.data) {
+                    $.get(SERVER_URL + '/users/' + task.taskee_email).done((r) => {
+                        const user = r.data;
+                        if(moment().isAfter(moment(task.expiry_date))) return;
+                        add_list_task(user, task);
+                    });
+                }
+            });
+        }
 
         $('#a_create_task').click(() => {
             $modalCreateTask.modal('show');
