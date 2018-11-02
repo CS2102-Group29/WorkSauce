@@ -5,4 +5,8 @@ if (!/\/(login|signup).html$/.test(location.href)) {
     if (current_user === null) {
         location.href ='login.html';
     }
+
+    $(() => {
+        $('#menu').load('menu.html');
+    });
 }
