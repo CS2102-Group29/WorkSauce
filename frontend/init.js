@@ -7,6 +7,11 @@ if (!/\/(login|signup).html$/.test(location.href)) {
     }
 
     $(() => {
-        $('#menu').load('menu.html');
+        $('#menu').load('menu.html', () => {
+            $('#a_logout').click(() => {
+                sessionStorage.clear();
+                location.reload();
+            });
+        });
     });
 }

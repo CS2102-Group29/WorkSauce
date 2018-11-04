@@ -537,11 +537,6 @@
             });
         });
 
-        $('#a_logout').click(() => {
-            sessionStorage.clear();
-            location.reload();
-        });
-
         function updateProfileInfo() {
             $.get(SERVER_URL + '/users/' + current_user).done((r) => {
                 const user = r.data;
