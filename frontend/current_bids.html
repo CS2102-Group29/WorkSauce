@@ -204,7 +204,7 @@
                                             if(res.success) {
                                                 const user = res.data;
                                                 $('#modal_profile').modal('show');
-                                                $('#profile_img').attr('src', user.image_url);
+                                                $('#profile_img').attr('src', user.image);
                                                 $('#profile_name').text(user.name);
                                                 $('#profile_email').text(user.email);
                                                 $('#profile_phone').text(user.mobile);
