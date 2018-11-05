@@ -8,7 +8,8 @@ CREATE TABLE users (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(256) NOT NULL,
     mobile VARCHAR(256) NOT NULL,
-    image TEXT
+    image TEXT,
+    is_admin BOOLEAN NOT NULL DEFAULT false
 );
 ```
 
