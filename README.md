@@ -37,7 +37,7 @@ CREATE TABLE bid_task (
     bidder_email VARCHAR(256) NOT NULL,
     bid NUMERIC NOT NULL,
     status bid_status NOT NULL,
-    FOREIGN KEY (task_id) REFERENCES tasks (id),
+    FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
     FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE,
     PRIMARY KEY (task_id, bidder_email)
 );
