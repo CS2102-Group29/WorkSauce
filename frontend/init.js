@@ -190,8 +190,14 @@ if (!/\/(login|signup).html$/.test(location.href)) {
                             $('#modal_create_task').modal('hide');
                             location.reload();
                         } else {
+                            let msg = '';
+                            if (r.err.constraint === 'tasks_check') {
+                                msg = 'Please ensure end time is not before start time.';
+                            } else if (r.err.constraint === 'tasks_check1') {
+                                msg = 'Please ensure expiry date is not after task date.';
+                            }
                             $('#form_create_task').addClass("error");
-                            $('#form_err_msg').text("Please ensure expiry date is not after task date.");
+                            $('#form_err_msg').text(msg);
                         }
                     });
                 });

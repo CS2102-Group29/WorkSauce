@@ -18,3 +18,5 @@
 "test18@example.com","test18","Leticia Walsh",45685633,"https://randomuser.me/api/portraits/men/18.jpg",FALSE
 "test19@example.com","test19","Peter Morales",37562572,"https://randomuser.me/api/portraits/men/19.jpg",FALSE
 "test20@example.com","test20","Devin Lane",67567363,"https://randomuser.me/api/portraits/men/20.jpg",FALSE
+"admin1@example.com","admin01","Admin Dave",12345678,"https://randomuser.me/api/portraits/men/21.jpg",TRUE
+"admin2@example.com","admin02","Admin Charley",23456789,"https://randomuser.me/api/portraits/men/22.jpg",TRUE

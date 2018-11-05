@@ -32,7 +32,8 @@ router.post('/new', (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const date = req.body.date;
-    var time = req.body.time;
+    const time = req.body.time;
+    const end_time = req.body.end_time;
     const location = req.body.location;
     const taskee_email = req.body.taskee_email;
     const expiry_date = req.body.expiry_date;
@@ -40,12 +41,13 @@ router.post('/new', (req, res) => {
     res.header({ 'Access-Control-Allow-Origin': '*' });
 
     var currentMaxId = 0;
+
     dbClient.query('SELECT MAX(id) FROM tasks').then(idres => {
         currentMaxId = idres.rows[0].max;
 
         dbClient.query(`INSERT INTO tasks VALUES (
                             ${currentMaxId + 1}, '${title}', '${description}', '${date}',
-                            '${time}', '${location}', '${taskee_email}', '${expiry_date}')`)
+                            '${time}', ${end_time !== '' ? "'" + end_time + "'" : 'NULL'}, '${location}', '${taskee_email}', '${expiry_date}')`)
                 .then(dbres => res.json({ success: true, data: req.body }))
                 .catch(err => res.json({ success: false, err: err }));
     });
