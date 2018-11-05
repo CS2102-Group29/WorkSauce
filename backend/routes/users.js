@@ -57,7 +57,7 @@ router.post('/new', (req, res) => {
 
     dbClient.query(`INSERT INTO users VALUES (
                         '${email}', '${password}', '${name}',
-                        '${mobile}', NULL, ${is_admin});`, (err, dbres) => {
+                        '${mobile}', 'https://i.stack.imgur.com/34AD2.jpg', ${is_admin});`, (err, dbres) => {
                             if(err && err.code === UNIQUE_VIOLATION) {
                                 res.json({ success: false, msg: "User with the specified email already exists." })
                             } else {
