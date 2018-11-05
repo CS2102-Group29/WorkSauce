@@ -567,6 +567,10 @@
             });
         });
 
+        $('#a_logout').click(() => {
+            sessionStorage.clear();
+            location.reload();
+        });
     </script>
 </body>
 </html>
