@@ -13,7 +13,7 @@ function populateTask(place, task) {
                             'disabled', moment().isAfter(expiry_date)).click(() => {
                                 $.get(SERVER_URL + '/tasks/' + task.id).done((res) => {
                                     const task_displayed = res.data;
-                                    console.log(task_displayed);
+                                    $('#modal_create_task').data('task_id', task.id);
                                     $('#modal_create_task').modal('show');
                                     $('#title').val(task_displayed.title);
                                     $('#date').val(task_displayed.date.replace(/T(.*)/, ""));

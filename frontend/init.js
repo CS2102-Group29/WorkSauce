@@ -181,8 +181,7 @@ if (!/\/(login|signup).html$/.test(location.href)) {
 
                 $('#form_create_task').on('submit', (e) => {
                     e.preventDefault();
-                    const data = $('#form_create_task').serialize() + '&taskee_email=' + current_user;
-
+                    const data = $('#form_create_task').serialize() + '&taskee_email=' + current_user + '&task_id=' + $('#modal_create_task').data('task_id');
                     $.post(SERVER_URL + '/tasks/new', data).done((r) => {
                         if (r.success) {
                             $('#form_create_task')[0].reset();

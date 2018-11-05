@@ -45,9 +45,22 @@ router.post('/new', (req, res) => {
     dbClient.query('SELECT MAX(id) FROM tasks').then(idres => {
         currentMaxId = idres.rows[0].max;
 
-        dbClient.query(`INSERT INTO tasks VALUES (
-                            ${currentMaxId + 1}, '${title}', '${description}', '${date}',
-                            '${time}', ${end_time !== '' ? "'" + end_time + "'" : 'NULL'}, '${location}', '${taskee_email}', '${expiry_date}')`)
+        const id = req.body.task_id == 'undefined' ? req.body.task_id : currentMaxId + 1;
+
+        dbClient.query(`INSERT INTO tasks
+                        VALUES (
+                            ${id}, '${title}', '${description}', '${date}',
+                            '${time}', ${end_time !== '' ? "'" + end_time + "'" : 'NULL'}, 
+                            '${location}', '${taskee_email}', '${expiry_date}')
+                        ON CONFLICT (id) DO UPDATE
+                        SET title = EXCLUDED.title,
+                            description = EXCLUDED.description,
+                            date = EXCLUDED.date,
+                            time = EXCLUDED.time,
+                            end_time = EXCLUDED.end_time,
+                            location = EXCLUDED.location,
+                            taskee_email = EXCLUDED.taskee_email,
+                            expiry_date = EXCLUDED.expiry_date`)
                 .then(dbres => res.json({ success: true, data: req.body }))
                 .catch(err => res.json({ success: false, err: err }));
     });
