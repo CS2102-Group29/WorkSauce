@@ -83,7 +83,7 @@
                                             if(res.success) {
                                                 $('#task_title').text(res.data.title);
                                                 $('#task_date').text(`Date: ${res.data.date.replace(/T(.*)/, "")}`);
-                                                $('#task_time').text(`Time: ${res.data.time}`);
+                                                $('#task_time').text(`Time: ${res.data.time}${res.data.end_time ? ' ~ ' + res.data.end_time : ''}`);
                                                 $('#task_location').text(`Location: ${res.data.location}`);
                                                 $('#task_email').text(`Contact: ${res.data.taskee_email}`);
                                                 $('#task_desc').text(`---> ${res.data.description}`);
