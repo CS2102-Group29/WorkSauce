@@ -3,7 +3,8 @@ CREATE TABLE users (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(256) NOT NULL,
     mobile VARCHAR(256) NOT NULL,
-    image TEXT
+    image TEXT,
+    admin_passcode BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE tasks (

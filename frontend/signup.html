@@ -83,7 +83,7 @@
                   prompt : 'Your password must be at least 6 characters'
                 }
               ]
-            }
+            },
           }, onSuccess: function(event, fields) {
             event.preventDefault();
             $.post(SERVER_URL + '/users/new', fields).done((res) => {
@@ -133,6 +133,12 @@
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input type="password" name="password" placeholder="Password">
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input" data-tooltip="Fill in this field only if you are signing up for an admin account.">
+              <i class="code icon"></i>
+              <input type="password" name="admin_passcode" placeholder="Admin Passcode">
             </div>
           </div>
 

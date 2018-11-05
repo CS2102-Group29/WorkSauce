@@ -3,7 +3,8 @@ const dbClient = require('../app').dbClient;
 const { Router } = require('express');
 const router = Router();
 
-const { UNIQUE_VIOLATION } = require('pg-error-constants')
+const { UNIQUE_VIOLATION } = require('pg-error-constants');
+const { ADMIN_PASSCODE } = require('../constants');
 
 // list all users
 router.get('/', (req, res) => {
@@ -39,12 +40,24 @@ router.post('/new', (req, res) => {
     const password = req.body.password;
     const name = req.body.name;
     const mobile = req.body.mobile;
+    const admin_passcode = req.body.admin_passcode
+    
+    var is_admin = false
 
     res.header({ 'Access-Control-Allow-Origin': '*' });
+    
+    if(admin_passcode) {
+        if(admin_passcode == ADMIN_PASSCODE) {
+            is_admin = true;
+        } else {
+            res.json({ success: false, msg: "The admin passcode you entered is wrong"});
+            return;
+        }
+    }
 
     dbClient.query(`INSERT INTO users VALUES (
                         '${email}', '${password}', '${name}',
-                        '${mobile}', NULL);`, (err, dbres) => {
+                        '${mobile}', NULL, ${is_admin});`, (err, dbres) => {
                             if(err && err.code === UNIQUE_VIOLATION) {
                                 res.json({ success: false, msg: "User with the specified email already exists." })
                             } else {
