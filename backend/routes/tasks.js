@@ -51,4 +51,19 @@ router.post('/new', (req, res) => {
     });
 });
 
+// delete task
+router.post('/delete/:id', (req, res) => {
+    const id = req.params.id;
+
+    res.header({ 'Access-Control-Allow-Origin': '*' });
+
+    dbClient.query(`DELETE FROM tasks WHERE id = ${id}`, (err, dbres) => {
+      if(err) {
+        res.json({ success: false, err: err });
+      } else {
+        res.json({ success: true });
+      }
+    });  
+});
+
 module.exports = router;

@@ -112,10 +112,11 @@ router.post('/authenticate', (req, res) => {
     const password = req.body.password;
     res.header({ 'Access-Control-Allow-Origin': '*' });
 
-    dbClient.query(`SELECT COUNT(*) FROM users 
-                    WHERE email = '${email}' AND password = '${password}'`, (err, dbres) => {
+    dbClient.query(`SELECT COUNT(*), is_admin FROM users 
+                    WHERE email = '${email}' AND password = '${password}'
+                    GROUP BY email`, (err, dbres) => {
                         if(dbres.rows[0].count === "1") {
-                            res.json({ success: true, email: email });
+                            res.json({ success: true, email: email, is_admin: dbres.rows[0].is_admin });
                         } else {
                             res.json({ success: false, msg: "The combination of email and password does not exist."})
                         }

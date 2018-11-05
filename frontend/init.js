@@ -1,5 +1,6 @@
 const SERVER_URL = 'http://localhost:4000';
 let current_user = sessionStorage.getItem('current_user');
+let is_admin = sessionStorage.getItem('is_admin');
 
 if (!/\/(login|signup).html$/.test(location.href)) {
     if (current_user === null) {

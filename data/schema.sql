@@ -4,7 +4,7 @@ CREATE TABLE users (
     name VARCHAR(256) NOT NULL,
     mobile VARCHAR(256) NOT NULL,
     image TEXT,
-    admin_passcode BOOLEAN NOT NULL DEFAULT false
+    is_admin BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE tasks (
@@ -27,7 +27,7 @@ CREATE TABLE bid_task (
     bid NUMERIC NOT NULL,
     status bid_status NOT NULL,
     PRIMARY KEY (task_id, bidder_email),
-    FOREIGN KEY (task_id) REFERENCES tasks (id),
+    FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
     FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE
 );
 
