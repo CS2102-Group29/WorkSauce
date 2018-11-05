@@ -57,7 +57,7 @@ router.post('/new', (req, res) => {
 
     dbClient.query(`INSERT INTO users VALUES (
                         '${email}', '${password}', '${name}',
-                        '${mobile}', NULL, ${is_admin});`, (err, dbres) => {
+                        '${mobile}', 'https://i.stack.imgur.com/34AD2.jpg', ${is_admin});`, (err, dbres) => {
                             if(err && err.code === UNIQUE_VIOLATION) {
                                 res.json({ success: false, msg: "User with the specified email already exists." })
                             } else {
@@ -112,13 +112,13 @@ router.post('/authenticate', (req, res) => {
     const password = req.body.password;
     res.header({ 'Access-Control-Allow-Origin': '*' });
 
-    dbClient.query(`SELECT COUNT(*), is_admin FROM users 
+    dbClient.query(`SELECT is_admin FROM users 
                     WHERE email = '${email}' AND password = '${password}'
                     GROUP BY email`, (err, dbres) => {
-                        if(dbres.rows[0].count === "1") {
-                            res.json({ success: true, email: email, is_admin: dbres.rows[0].is_admin });
-                        } else {
+                        if (dbres.rowCount === 0) {
                             res.json({ success: false, msg: "The combination of email and password does not exist."})
+                        } else {
+                            res.json({ success: true, email: email, is_admin: dbres.rows[0].is_admin });
                         }
                     });
 });
