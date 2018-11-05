@@ -1,36 +1,31 @@
 function populateTask(place, task) {
     $.get(SERVER_URL + '/bids?task_id=' + task.id).done((data) => {
-      const expiry_date = moment(task.expiry_date)
-      console.log(expiry_date);
+        const expiry_date = moment(task.expiry_date)
         place.append(
-          $('<div class="title">').append(
-            $('<div class="ui grid">').append(
-              $('<div class="ten wide column target">').html(
-                '<i class="dropdown icon"></i>' + task.title
-              )
-            ).append(
-              $('<div class="three wide column">').append(
-                  $('<button class="ui small blue button">').text('Edit').prop(
-                    'disabled', moment().isAfter(expiry_date)).click(() => {
-                  alert('edit');                 
-                })
-              )
-            ).append(
-              $('<div class="three wide column">').append(
-                  $('<button class="ui small red button">').text('Delete')
-                    .prop('disabled', moment().isAfter(expiry_date))
-                    .click(() => {
-                        $.post(SERVER_URL + '/tasks/delete/' + task.id).done((res) => {
-                            if(!res.success) {
-                                console.log(res.err);
-                            } else {
+            $('<div class="title">').append(
+                $('<div class="ui grid">').append(
+                    $('<div class="ten wide column target">').html(
+                        '<i class="dropdown icon"></i>' + task.title
+                    )
+                ).append(
+                    $('<div class="three wide column">').append(
+                        $('<button class="ui small blue button">').text('Edit').prop(
+                            'disabled', moment().isAfter(expiry_date)).click(() => {
+                                alert('edit');                 
+                            })
+                    )
+                ).append(
+                    $('<div class="three wide column">').append(
+                        $('<button class="ui small red button">').text('Delete')
+                        .prop('disabled', moment().isAfter(expiry_date))
+                        .click(() => {
+                            $.post(SERVER_URL + '/tasks/delete/' + task.id).done((res) => {
                                 location.reload();
-                            }
+                            })
                         })
-                    })
-              )
+                    )
+                )
             )
-          )
         );
         place.append(
             $('<div class="content">').append(
@@ -145,10 +140,10 @@ $(() => {
         }
     });
 
-  $taskList.accordion({
-    selector: {
-      trigger: '.title .target'
-    }
-  });
+    $taskList.accordion({
+        selector: {
+            trigger: '.title .target'
+        }
+    });
 });
 
