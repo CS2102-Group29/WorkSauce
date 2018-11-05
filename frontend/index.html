@@ -188,14 +188,18 @@
                     <label for="title">Title</label>
                     <input type="text" name="title" id="title" required>
                 </div>
+                <div class="required field">
+                    <label for="date">Date</label>
+                    <input type="date" name="date" id="date" required>
+                </div>
                 <div class="two fields">
                     <div class="required field">
-                        <label for="date">Date</label>
-                        <input type="date" name="date" id="date" required>
-                    </div>
-                    <div class="required field">
-                        <label for="time">Time</label>
+                        <label for="time">Start Time</label>
                         <input type="time" name="time" id="time" required>
+                    </div>
+                    <div class="field">
+                        <label for="end_time">End Time</label>
+                        <input type="time" name="end_time" id="end_time">
                     </div>
                 </div>
                 <div class="required field">
@@ -452,7 +456,7 @@
                 if(res.success) {
                     $('#task_title').text(res.data.title);
                     $('#task_date').text(`Date: ${res.data.date.replace(/T(.*)/, "")}`);
-                    $('#task_time').text(`Time: ${res.data.time}`);
+                    $('#task_time').text(`Time: ${res.data.time}${res.data.end_time ? ' ~ ' + res.data.end_time : ''}`);
                     $('#task_location').text(`Location: ${res.data.location}`);
                     $('#task_email').text(`Contact: ${res.data.taskee_email}`);
                     $('#task_desc').text(`---> ${res.data.description}`);
