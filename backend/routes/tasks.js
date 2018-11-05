@@ -62,7 +62,17 @@ router.post('/new', (req, res) => {
                             taskee_email = EXCLUDED.taskee_email,
                             expiry_date = EXCLUDED.expiry_date`)
                 .then(dbres => res.json({ success: true, data: req.body }))
-                .catch(err => res.json({ success: false, err: err }));
+            .catch((err) => {
+                let msg;
+
+                if (err.constraint === 'tasks_check') {
+                    msg = 'Please ensure end time is not before start time.';
+                } else if (err.constraint === 'tasks_check1') {
+                    msg = 'Please ensure expiry date is not after task date.';
+                }
+
+                res.json({ success: false, err: err, msg: msg})
+            });
     });
 });
 

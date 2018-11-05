@@ -21,6 +21,7 @@ CREATE TABLE tasks (
     description TEXT,
     date DATE NOT NULL,
     time TIME NOT NULL,
+    end_time TIME NOT NULL CHECK(end_time > time),
     location VARCHAR(256) NOT NULL,
     taskee_email VARCHAR(256) NOT NULL,
     expiry_date DATE NOT NULL CHECK(expiry_date <= date),

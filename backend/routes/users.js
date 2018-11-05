@@ -34,6 +34,21 @@ router.get('/:email', (req, res) => {
     });
 })
 
+// delete one user
+router.get('/delete/:email', (req, res) => {
+    const email = req.params.email;
+
+    res.header({'Access-Control-Allow-Origin': '*'});
+
+    dbClient.query(`DELETE FROM users WHERE email = '${email}'`, (err, dbres) => {
+        if (!err) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false, msg: err });
+        }
+    });
+})
+
 // create user
 router.post('/new', (req, res) => {
     const email = req.body.email;
