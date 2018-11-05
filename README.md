@@ -8,7 +8,7 @@ CREATE TABLE users (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(256) NOT NULL,
     mobile VARCHAR(256) NOT NULL,
-    image TEXT,
+    image TEXT NOT NULL DEFAULT 'https://i.stack.imgur.com/34AD2.jpg',
     is_admin BOOLEAN NOT NULL DEFAULT false
 );
 ```
@@ -21,6 +21,7 @@ CREATE TABLE tasks (
     description TEXT,
     date DATE NOT NULL,
     time TIME NOT NULL,
+    end_time TIME NOT NULL CHECK(end_time > time),
     location VARCHAR(256) NOT NULL,
     taskee_email VARCHAR(256) NOT NULL,
     expiry_date DATE NOT NULL CHECK(expiry_date <= date),
@@ -37,7 +38,7 @@ CREATE TABLE bid_task (
     bidder_email VARCHAR(256) NOT NULL,
     bid NUMERIC NOT NULL,
     status bid_status NOT NULL,
-    FOREIGN KEY (task_id) REFERENCES tasks (id),
+    FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
     FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE,
     PRIMARY KEY (task_id, bidder_email)
 );

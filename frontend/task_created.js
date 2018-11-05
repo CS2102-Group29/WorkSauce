@@ -1,8 +1,43 @@
 function populateTask(place, task) {
     $.get(SERVER_URL + '/bids?task_id=' + task.id).done((data) => {
+        const expiry_date = moment(task.expiry_date)
         place.append(
-            $('<div class="title">').html(
-                '<i class="dropdown icon"></i>' + task.title
+            $('<div class="title">').append(
+                $('<div class="ui grid">').append(
+                    $('<div class="ten wide column target">').html(
+                        '<i class="dropdown icon"></i>' + task.title
+                    )
+                ).append(
+                    $('<div class="three wide column">').append(
+                        $('<button class="ui small blue button">').text('Edit').prop(
+                            'disabled', moment().isAfter(expiry_date)).click(() => {
+                                $.get(SERVER_URL + '/tasks/' + task.id).done((res) => {
+                                    const task_displayed = res.data;
+                                    console.log(task_displayed);
+                                    $('#modal_create_task').modal('show');
+                                    $('#title').val(task_displayed.title);
+                                    $('#date').val(task_displayed.date.replace(/T(.*)/, ""));
+                                    $('#time').val(task_displayed.time);
+                                    $('#end_time').val(task_displayed.end_time);
+                                    $('#loc').val(task_displayed.location);
+                                    $('#exp_date').val(task_displayed.expiry_date.replace(/T(.*)/,""));
+                                    $('#desc').val(task_displayed.description);
+
+                                    $('#modal_create_task .header').html('Edit Task');
+                                })
+                            })
+                    )
+                ).append(
+                    $('<div class="three wide column">').append(
+                        $('<button class="ui small red button">').text('Delete')
+                        .prop('disabled', moment().isAfter(expiry_date))
+                        .click(() => {
+                            $.post(SERVER_URL + '/tasks/delete/' + task.id).done((res) => {
+                                location.reload();
+                            })
+                        })
+                    )
+                )
             )
         );
         place.append(
@@ -118,5 +153,9 @@ $(() => {
         }
     });
 
-    $taskList.accordion();
+    $taskList.accordion({
+        selector: {
+            trigger: '.title .target'
+        }
+    });
 });

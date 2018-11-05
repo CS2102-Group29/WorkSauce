@@ -3,8 +3,8 @@ CREATE TABLE users (
     password VARCHAR(256) NOT NULL,
     name VARCHAR(256) NOT NULL,
     mobile VARCHAR(256) NOT NULL,
-    image TEXT,
-    admin_passcode BOOLEAN NOT NULL DEFAULT false
+    image TEXT NOT NULL DEFAULT 'https://i.stack.imgur.com/34AD2.jpg',
+    is_admin BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE tasks (
@@ -17,7 +17,7 @@ CREATE TABLE tasks (
     location VARCHAR(256) NOT NULL,
     taskee_email VARCHAR(256) NOT NULL,
     expiry_date DATE NOT NULL CHECK(expiry_date <= date),
-    FOREIGN KEY (taskee_email) REFERENCES users (email) ON UPDATE CASCADE
+    FOREIGN KEY (taskee_email) REFERENCES users (email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TYPE bid_status AS ENUM ('success', 'ongoing', 'fail');
@@ -28,8 +28,8 @@ CREATE TABLE bid_task (
     bid NUMERIC NOT NULL,
     status bid_status NOT NULL,
     PRIMARY KEY (task_id, bidder_email),
-    FOREIGN KEY (task_id) REFERENCES tasks (id),
-    FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE
+    FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
+    FOREIGN KEY (bidder_email) REFERENCES users (email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE FUNCTION change_everything_to_fail()

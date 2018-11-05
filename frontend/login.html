@@ -63,17 +63,16 @@
             event.preventDefault();
             $.post(SERVER_URL + '/users/authenticate', fields).done((res) => {
                 if(res.success) {
-                  sessionStorage.setItem('current_user', fields.email);
+                  sessionStorage.setItem('current_user', res.email);
+                  sessionStorage.setItem('is_admin', res.is_admin);
                   location.href = 'index.html';
                 } else {
-                    alert(res.msg);
+                  alert(res.msg);
                 }
             });
           }
-        })
-      ;
-    })
-  ;
+        });
+    });
 </script>
 <body>
   <div class="ui middle aligned center aligned grid">
