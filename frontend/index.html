@@ -536,7 +536,7 @@
                     location.reload();
                 } else {
                     $formCreateTask.addClass("error");
-                    $('#form_err_msg').text("Please ensure expiry date is not after task date.");
+                    $('#form_err_msg').text(r.msg);
                 }
             });
         });
