@@ -38,7 +38,7 @@ email address.
 <summary><b>Log In</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Log_in.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Log_In.png">
 </p>
 To log in, fill in the email and password field shown above.
 <br>
