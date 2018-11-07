@@ -1,5 +1,9 @@
 # WorkSauce
 
+<p align="center">
+  <img width="200" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/frontend/assets/images/logo.png">
+</p>
+
 ## Welcome to WorkSauce!
 
 WorkSauce is a platform that connects taskees and taskers. Upon signing up for a new account, 
