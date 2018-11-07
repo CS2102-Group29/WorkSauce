@@ -45,7 +45,7 @@ router.post('/new', (req, res) => {
     dbClient.query('SELECT MAX(id) FROM tasks').then(idres => {
         currentMaxId = idres.rows[0].max;
 
-        const id = req.body.task_id == 'undefined' ? req.body.task_id : currentMaxId + 1;
+        const id = req.body.task_id ? req.body.task_id : currentMaxId + 1;
 
         dbClient.query(`INSERT INTO tasks
                         VALUES (

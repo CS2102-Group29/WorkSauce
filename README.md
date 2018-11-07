@@ -1,4 +1,14 @@
-# task_sourcing
+# WorkSauce
+
+## Welcome to WorkSauce!
+
+WorkSauce is a platform that connects taskees and taskers. Upon signing up for a new account, a normal user can either submit tasks or pick tasks. Tasks are general chores such as washing a car on Kent Vale’s car park on Sunday or delivering a parcel on Tuesday between 17:00 and 19:00. A user who wants to pick a task can bid the **hourly rate (in USD)** that he is willing to accept for that particular task. The user who submits that task will have to choose the successful bidder before the stipulated expiry date (specified during task submission).
+
+There are two types of account, namely the normal user account and the administrator account. Besides all the functionalities available to the normal users, administrators can create, modify and delete all entries. To create an administrator account, please refer to [Create an Administrator Account](#Create-an-Administrator-Account)
+
+## Create an Administrator Account
+
+
 ## [Schemas](data/schema.sql)
 
 1. users (entity)
