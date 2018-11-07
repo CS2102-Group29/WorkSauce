@@ -90,7 +90,6 @@ This is where you can see all the tasks you have successfully bidded and have ye
 <br>
 </details>
 
-### Bidding Manager
 <details>
 <summary><b>Bidding Manager</b></summary>
 <br>
