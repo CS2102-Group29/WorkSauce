@@ -21,14 +21,14 @@ modify and delete all entries. To create an administrator account, please refer 
 
 ## Creating an Administrator Account
 
-To create an administrator account, navigate to the sign up page and fill in the form as per 
-normal user sign up. Fill in the optional admin passcode field. The admin passcode is set to 
-'I am an admin'. An administartor can subsequently sign in to his/her account like a normal 
-user while retaining all the administrators' privileges. Below is the screenshot on the sign
-up page.
+To create an administrator account:
+1. Navigate to the sign up page and fill in the form as per normal user sign up. 
+2. Fill in the optional admin passcode field. The admin passcode is set to 'I am an admin'. 
+An administartor can subsequently sign in to his/her account like a normal user while 
+retaining all the administrators' privileges. Below is the screenshot on the sign up page.
 
 <p align="center">
-  <img width="800" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="600" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
 </p>
 
 ## Tech Stack
