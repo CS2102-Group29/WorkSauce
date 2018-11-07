@@ -14,7 +14,10 @@ successful bidder before the stipulated expiry date (specified during task submi
 There are two types of account, namely the normal user account and the administrator account. 
 Besides all the functionalities available to the normal users, administrators can create, 
 modify and delete all entries. To create an administrator account, please refer to 
-[Creating an Administrator Account](#Creating-an-Administrator-Account)
+[Creating an Administrator Account](#Creating-an-Administrator-Account) section.
+
+## Getting Started Guide
+
 
 ## Creating an Administrator Account
 
@@ -25,10 +28,17 @@ user while retaining all the administrators' privileges. Below is the screenshot
 up page.
 
 <p align="center">
-  <img width="800" src="https://github.com/CS2102-Group29/WorkSauce/tree/master/screenshots/Admin_Passcode.png">
+  <img width="800" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
 </p>
 
-## [Schemas](data/schema.sql)
+## Tech Stack
+
+* DBMS: PostgreSQL
+* Database Server: Node.js
+* Client-side languages: HTML, CSS, Javascript
+* Server-side languages: -
+
+## [Database Schemas](data/schema.sql)
 
 1. users (entity)
 ```sql
@@ -88,3 +98,9 @@ FOR EACH ROW
 WHEN (NEW.status = 'success')
 EXECUTE PROCEDURE change_everything_to_fail();
 ```
+
+## Entity-Relationship Diagram
+
+<p align="center">
+  <img width="800" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/ER_Diagram.png">
+</p>
