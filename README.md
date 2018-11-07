@@ -18,18 +18,51 @@ modify and delete all entries. To create an administrator account, please refer 
 
 ## Getting Started Guide
 
+The following are the breakdown of the pages in WorkSauce web application to help you navigate
+through the application easily.
 
+### Sign Up
+
+### Log In
+
+### Home
+
+### Tasks Created
+
+### Upcoming Tasks
+
+### Bidding Manager
+ 
 ## Creating an Administrator Account
 
 To create an administrator account:
 1. Navigate to the sign up page and fill in the form as per normal user sign up. 
 2. Fill in the optional admin passcode field. The admin passcode is set to 'I am an admin'. 
+
+<p align="center">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+</p>
+
 An administartor can subsequently sign in to his/her account like a normal user while 
 retaining all the administrators' privileges. Below is the screenshot on the sign up page.
 
-<p align="center">
-  <img width="600" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
-</p>
+## Dummy Accounts
+
+We have created 20 normal user accounts and 2 administrator accounts for you to try out.
+To sign in as a normal user, key in `testX@example.com` and `testY` for the email and
+password fields respectively.  To sign in as an administrator, key in `adminZ@example.com` and
+`adminW` for the email and password fields respectively.
+
+* X is a number from 1 to 20 inclusive
+* Y is a number from 01 to 20 inclusive (at least 2 character long)
+* Z is a number from 1 to 2 inclusive
+* W is a number from 01 to 02 inclusive (at least 2 character long)
+
+For example:
+
+* email : `admin1@example.com` ; password : `admin01`
+* email : `test3@example.com` ; password : `test03`
+* email : `test15@example.com` ; password : `test15`
 
 ## Tech Stack
 
