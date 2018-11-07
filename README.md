@@ -25,28 +25,30 @@ through the application easily.
 <summary><b>Sign Up</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Sign_Up.png">
 </p>
 To sign up, simply fill in all the details required (shown in the figure above). The admin
-passcode field can be left blank. It should only be filled in when 
-[creating and administrator account](#Creating-an-Administrator-Account). There will be an
-alert message if you are trying to sign up using an already existing email address.
+passcode field can be left blank. It should only be filled in when creating an administrator 
+accoun. There will be an alert message if you are trying to sign up using an already existing 
+email address.
+<br>
 </details>
 
 <details>
 <summary><b>Log In</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Log_in.png">
 </p>
 To log in, fill in the email and password field shown above.
+<br>
 </details>
 
 <details>
 <summary><b>Home</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Home.png">
 </p>
 The home page shows all the tasks submitted by all the users. You can filter the tasks by using
 the search bar on the top left hand corner of the screen.
@@ -58,13 +60,14 @@ for the task.
 
 Note that you will be able to see all the tasks you have submitted, but you will not be able 
 to bid for those tasks.
+<br>
 </details>
 
 <details>
-<summary><b>Task Created</b></summary>
+<summary><b>Tasks Created</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Tasks_Created.png">
 </p>
 
 You will be able to see all the tasks you have submitted here. You can click on the `Edit` and 
@@ -73,16 +76,18 @@ edit or delete tasks that have passed.
 
 You will also be able to see all the bidders who are interested in the tasks. You can choose a
 successful bidder by using the toggle button beside the name of the bidder, and click accept.
+<br>
 </details>
 
 <details>
 <summary><b>Upcoming Tasks</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Upcoming_Tasks.png">
 </p>
 
 This is where you can see all the tasks you have successfully bidded and have yet to complete.
+<br>
 </details>
 
 ### Bidding Manager
@@ -90,7 +95,7 @@ This is where you can see all the tasks you have successfully bidded and have ye
 <summary><b>Bidding Manager</b></summary>
 <br>
 <p align="center">
-  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Admin_Passcode.png">
+  <img width="400" src="https://github.com/CS2102-Group29/WorkSauce/blob/master/screenshots/Bidding_Manager.png">
 </p>
 
 Bidding Manager collates all your bids in one place, whether they are successful, unsuccessful,
