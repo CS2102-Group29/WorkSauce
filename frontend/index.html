@@ -121,14 +121,14 @@
                 ]
               }
             }, onSuccess: function(event, fields) {
+              const selected_user = $('#profile_email').text();
               event.preventDefault();
-              $.post(`${SERVER_URL}/users/updateinfo/${current_user}`, fields).done((res) => {
+              $.post(`${SERVER_URL}/users/updateinfo/${selected_user}`, fields).done((res) => {
                 if(res.success) {
-                    showProfileHideForm();
-                    sessionStorage.setItem('current_user', fields.email);
-                    current_user = fields.email;
-                    updateProfileInfo();
-                    // alert(res.msg + 'yaitu');
+                    if (current_user === selected_user) {
+                        sessionStorage.setItem('current_user', fields.email);
+                    }
+                    location.reload();
                 } else {
                     alert(res.msg);
                 }
@@ -218,6 +218,8 @@
                     <div class="header">Error</div>
                     <p id="form_err_msg"></p>
                 </div>
+                <input type="hidden" name="task_id">
+                <input type="hidden" name="taskee_email">
             </form>
         </div>
         <div class="actions">
@@ -339,6 +341,7 @@
             </form>
         </div>
     </div>
+    <script src="admin.js"></script>
     <script>
         $('#profile_update_form').hide();
         $('#cancel_update_btn').hide();
@@ -354,6 +357,7 @@
         });
 
         function previewFile() {
+          const selected_email = $('#profile_email').text();
           var file    = document.querySelector('input[type=file]').files[0];
           var reader  = new FileReader();
           var preview = document.querySelector('img');
@@ -362,7 +366,7 @@
             //now need to call the node js route
             preview.src = reader.result;
             var imageObj = {image: reader.result};
-             $.post(`${SERVER_URL}/users/updateimg/${current_user}`, imageObj).done((res) => {
+             $.post(`${SERVER_URL}/users/updateimg/${selected_email}`, imageObj).done((res) => {
                         if(res.success) {
                             updateProfileInfo();
                             displayTasks();
@@ -398,7 +402,8 @@
         }
 
         $('#editInfoBtn').click(() => {
-            $.get(`${SERVER_URL}/users/${current_user}`).done((res) => {
+            const selected_email = $('#profile_email').text();
+            $.get(`${SERVER_URL}/users/${selected_email}`).done((res) => {
                 if(res.success) {
                     $('#profile_update_form input[name="name"]').val(res.data.name);
                     $('#profile_update_form input[name="email"]').val(res.data.email);
@@ -521,12 +526,13 @@
         }
 
         $('#a_create_task').click(() => {
+            $('#form_create_task input[name=taskee_email]').val(current_user);
             $modalCreateTask.modal('show');
         });
 
         $formCreateTask.on('submit', (e) => {
             e.preventDefault();
-            const data = $formCreateTask.serialize() + '&taskee_email=' + current_user;
+            let data = $formCreateTask.serialize();
 
             $.post(SERVER_URL + '/tasks/new', data).done((r) => {
                 if (r.success) {
