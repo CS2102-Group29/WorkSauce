@@ -145,7 +145,7 @@ For example:
 ## Tech Stack
 
 * DBMS: PostgreSQL
-* Database Server: Node.js
+* API Server: Node.js
 * Client-side languages: HTML, CSS, Javascript
 * Server-side languages: -
 
